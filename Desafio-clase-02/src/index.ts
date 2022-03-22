@@ -38,7 +38,7 @@ class Users {
 	}
 }
 
-// const userOne = new Users('Fabricio', 'Mores');
+const userOne = new Users('Fabricio', 'Mores');
 
 // const fullName = userOne.getFullName();
 // console.log(fullName);
@@ -52,5 +52,3 @@ class Users {
 
 // const bookTitles = userOne.getBookTitles();
 // console.log('Titulos de libros almacenados:', bookTitles);
-
-//

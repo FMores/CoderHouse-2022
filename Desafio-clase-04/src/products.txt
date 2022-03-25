@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"title": "mayonesa",
+		"price": 34,
+		"thumbnail": "foto-mayonesa"
+	},
+	{
+		"id": 2,
+		"title": "mayonesa",
+		"price": 34,
+		"thumbnail": "foto-mayonesa"
+	}
+]

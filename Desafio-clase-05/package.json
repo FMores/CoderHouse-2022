@@ -1,0 +1,18 @@
+{
+	"name": "desafio-clase-02",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "utilizacion de modulo Fs/promises",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon ./src/index.js"
+	},
+	"author": "F.Mores",
+	"license": "ISC",
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	},
+	"dependencies": {
+		"moment": "^2.29.1"
+	}
+}

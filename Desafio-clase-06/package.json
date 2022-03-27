@@ -1,18 +1,25 @@
 {
-	"name": "desafio-clase-02",
-	"version": "1.0.0",
-	"type": "module",
-	"description": "utilizacion de modulo Fs/promises",
-	"main": "index.js",
-	"scripts": {
-		"start": "nodemon ./src/index.js"
-	},
-	"author": "F.Mores",
-	"license": "ISC",
-	"devDependencies": {
-		"nodemon": "^2.0.15"
-	},
-	"dependencies": {
-		"moment": "^2.29.1"
-	}
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./dist",
+    "build": "tsc -p .",
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.7.1",
+    "nodemon": "^2.0.12",
+    "ts-loader": "^9.2.5",
+    "ts-node": "^10.2.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "typescript": "^4.3.5"
+  }
 }

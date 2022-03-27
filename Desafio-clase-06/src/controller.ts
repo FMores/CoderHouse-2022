@@ -13,7 +13,7 @@ class Container {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	};
 
-	fileStat = async () => {
+	private fileStat = async () => {
 		const fileStats = await fs.stat(this.filePath);
 		if (fileStats.size === 0) {
 			await fs.writeFile(this.filePath, JSON.stringify([]));

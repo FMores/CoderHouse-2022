@@ -39,7 +39,7 @@ class Container {
 			} else {
 				res.status(404).send({ data: null });
 			}
-		} catch (err) {
+		} catch (err: any) {
 			if (err.code === 'ENOENT') {
 				res.status(404).send({ Error: this.fileNotFound });
 			} else {
@@ -58,7 +58,7 @@ class Container {
 			} else {
 				res.status(200).send({ data: null });
 			}
-		} catch (err) {
+		} catch (err: any) {
 			if (err.code === 'ENOENT') {
 				res.status(404).send({ Error: this.fileNotFound });
 			} else {

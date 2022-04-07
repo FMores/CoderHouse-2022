@@ -38,7 +38,7 @@ class Container {
 			await this.fileStat();
 			const data = await this.readFile();
 			if (data.length > 0) {
-				res.status(200).send({ data: data });
+				res.status(200).render('productList', { data: data });
 			} else {
 				res.status(404).send({ data: null });
 			}

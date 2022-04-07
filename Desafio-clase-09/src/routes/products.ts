@@ -4,25 +4,36 @@ import upload from '../middleware/multer';
 
 const router = Router();
 
+//Ruta para agregar un producto nuevo mediante un formulario
+router.get('/nuevo', (req: Request, res: Response) => {
+	res.render('newProduct');
+});
+
+//Rutas para el manejo de productos.
 router.get('/', productController.getAll);
 
 router.get('/:id', productController.getById);
 
-router.post('/nuevo', productController.save);
+router.post('/guardar', productController.save);
 
 router.put('/:id', productController.updateById);
 
 router.delete('/:id', productController.deleteById);
 
-router.post('/image/uploadsingle', upload.single('singleFile'), (req: Request, res: Response, next: NextFunction) => {
-	const singleFile = req.file;
-	if (!singleFile) {
-		const error = new Error('Debes seleccionar una imagen para guardar');
-		req.statusCode = 400;
-		return next(error);
-	}
-	res.status(200).send({ msg: 'funciono el single' });
-});
+// Rutas para utilizar con multer
+router.post(
+	'/imagen/uploadsingle',
+	upload.single('singleFile'),
+	(req: Request, res: Response, next: NextFunction) => {
+		const singleFile = req.file;
+		if (!singleFile) {
+			const error = new Error('Debes seleccionar una imagen para guardar');
+			req.statusCode = 400;
+			return next(error);
+		}
+		res.status(200).send({ msg: 'funciono el single' });
+	},
+);
 
 router.post(
 	'/image/uploadmultiple',

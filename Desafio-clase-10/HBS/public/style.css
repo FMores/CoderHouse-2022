@@ -1,0 +1,40 @@
+.title {
+	text-align: center;
+}
+
+td {
+	vertical-align: middle !important;
+}
+
+.th-id {
+	vertical-align: middle !important;
+}
+
+.h1-error {
+	text-align: center;
+	position: fixed;
+	top: 50%;
+	left: 40%;
+}
+
+body {
+	background-color: #616567;
+}
+
+.img-err {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.error-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+.error-actions {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.error-actions .btn {
+	margin-right: 10px;
+}

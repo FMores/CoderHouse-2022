@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous')
+        link(rel='stylesheet' href='http://localhost:8080/style.css')
+        title Document
+
+    body
+        if data.length > 0
+            .container
+                .row
+                    .col-md-12
+                        br
+                        .table-responsive
+                            table.table.table-striped.table-bordered.table-secondary
+                                h1.title Lista de productos
+                                thead.thead-dark
+                                    tr
+                                        th(scope='col') Id
+                                        th(scope='col') Name
+                                        th(scope='col') Price
+                                        th(scope='col') Image
+                                tbody
+                                    each el in data
+                                        tr
+                                            th.th-id(scope='row')= el.id 
+                                            td=  el.title
+                                            td= "$"+el.price
+                                            td
+                                                img(src=el.thumbnail width='50' height='50' alt=el.title)
+                        form.form-horizontal(method='POST' action='/api/producto/guardar')
+                            .form-group
+                                button.btn.btn-primary.btn-lg.btn-block.login-button(type='button' onClick="location.href='http://localhost:8080/api/producto/nuevo'") Registrar nuevo producto
+        else 
+            h1.title Empty File!
+            img.img-err(src='http://localhost:8080/emptyFile.png' alt='Empty-File')
+            button.btn.btn-primary.btn-lg.btn-block.login-button(type='button' onClick="location.href='http://localhost:8080/api/producto/nuevo'") Registrar nuevo producto

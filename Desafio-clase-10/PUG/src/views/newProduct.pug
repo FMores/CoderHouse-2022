@@ -1,0 +1,50 @@
+doctype html
+html(lang="en")
+    head 
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous')
+        link(rel='stylesheet' href='http://localhost:8080/style.css')
+        title Pagina principal de PUG
+
+    body
+        br
+        br
+        .container
+            .row.justify-content-center
+                .col-md-8
+                    .card
+                        .card-header.title
+                            h2 Registro de producto
+                        .card-body
+                            form.form-horizontal(method='POST' action='/api/producto/guardar')
+                                .form-group
+                                    label.cols-sm-2.control-label(for='name') Name
+                                    .cols-sm-10
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fa.fa-user.fa(aria-hidden='true')
+                                            input#title.form-control(type='text' name='title' placeholder='Enter Name' required='')
+                                .form-group
+                                    label.cols-sm-2.control-label(for='email') Price
+                                    .cols-sm-10
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fa.fa-envelope.fa(aria-hidden='true')
+                                            input#price.form-control(type='number' name='price' placeholder='Enter Price' required='')
+                                .form-group
+                                    label.cols-sm-2.control-label(for='email') Image
+                                    .cols-sm-10
+                                        .input-group
+                                            span.input-group-addon
+                                                i.fa.fa-envelope.fa(aria-hidden='true')
+                                            input#thumbnail.form-control(type='text' name='thumbnail' placeholder='Enter link' required='')
+                                .form-group
+                                    button.btn.btn-primary.btn-lg.btn-block.login-button(type='submit') Registrar
+                    br
+                    form.form-horizontal
+                        .form-group
+                            button.btn.btn-primary.btn-lg.btn-block.login-button(type='button' onClick="location.href='http://localhost:8080/api/producto/lista'") Lista de productos
+
+
+

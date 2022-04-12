@@ -4,13 +4,18 @@ import upload from '../middleware/multer';
 
 const router = Router();
 
+//Rutas para testing de PUG
+router.get('/nuevo', (req: Request, res: Response) => {
+	res.status(200).render('newProduct');
+});
+
 //Ruta para agregar un producto nuevo mediante un formulario
 router.get('/nuevo', (req: Request, res: Response) => {
 	res.render('newProduct');
 });
 
 //Rutas para el manejo de productos.
-router.get('/', productController.getAll);
+router.get('/lista', productController.getAll);
 
 router.get('/:id', productController.getById);
 

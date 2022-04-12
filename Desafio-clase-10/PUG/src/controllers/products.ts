@@ -40,10 +40,9 @@ class Container {
 			if (data.length > 0) {
 				res.status(200).render('productList', { data: data });
 			} else {
-				res.status(404).send({ data: null });
+				res.status(404).render('productList', { data: [] });
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -65,7 +64,6 @@ class Container {
 				res.status(404).send({ product: null });
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -94,15 +92,14 @@ class Container {
 				const newData = { id: oldData.length + 1, ...newProduct };
 				oldData.push(newData);
 				await this.writeFile(oldData);
-				res.status(200).send({ saved_data: newData });
+				res.status(200).redirect('pug');
 			} else {
 				const initialProductObj = { id: 1, ...newProduct };
 				const initialArrOfData = [initialProductObj];
 				await this.writeFile(initialArrOfData);
-				res.status(200).send({ saved_data: initialProductObj });
+				res.status(200).redirect('pug');
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -164,7 +161,6 @@ class Container {
 				res.status(404).send({ product: null });
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};

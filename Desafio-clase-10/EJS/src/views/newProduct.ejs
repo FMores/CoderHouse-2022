@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="http://localhost:8080/style.css" />
+		<title>Pagina principal de PUG</title>
+	</head>
+	<body>
+		<br /><br />
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-header title">
+							<h2>Registro de producto</h2>
+						</div>
+						<div class="card-body">
+							<form class="form-horizontal" method="POST" action="/api/producto/guardar">
+								<div class="form-group">
+									<label class="cols-sm-2 control-label" for="name">Name</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+											<input
+												class="form-control"
+												id="title"
+												type="text"
+												name="title"
+												placeholder="Enter Name"
+												required=""
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="cols-sm-2 control-label" for="email">Price</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"
+												><i class="fa fa-envelope fa" aria-hidden="true"></i
+											></span>
+											<input
+												class="form-control"
+												id="price"
+												type="number"
+												name="price"
+												placeholder="Enter Price"
+												required=""
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="cols-sm-2 control-label" for="email">Image</label>
+									<div class="cols-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon"
+												><i class="fa fa-envelope fa" aria-hidden="true"></i
+											></span>
+											<input
+												class="form-control"
+												id="thumbnail"
+												type="text"
+												name="thumbnail"
+												placeholder="Enter link"
+												required=""
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary btn-lg btn-block login-button" type="submit">
+										Registrar
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<br />
+					<form class="form-horizontal">
+						<div class="form-group">
+							<button
+								class="btn btn-primary btn-lg btn-block login-button"
+								type="button"
+								onClick="location.href='http://localhost:8080/api/producto/lista'"
+							>
+								Lista de productos
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

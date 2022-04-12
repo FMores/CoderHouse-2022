@@ -10,7 +10,7 @@ router.get('/nuevo', (req: Request, res: Response) => {
 });
 
 //Rutas para el manejo de productos.
-router.get('/', productController.getAll);
+router.get('/lista', productController.getAll);
 
 router.get('/:id', productController.getById);
 

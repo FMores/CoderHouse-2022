@@ -9,21 +9,10 @@ export const app = express();
 //Configuracion de Handlebars
 
 //Obtengo los path absolutos de las carpetas necesarias.
-const layoutFolderPath = path.resolve(__dirname, '../views/layouts');
-const defaultLayoutFolderPath = path.resolve(__dirname, '../views/layouts/index');
-const partialsFolderPath = path.resolve(__dirname, '../views/partials');
 const viewsFolderPath = path.resolve(__dirname, '../views');
 
-const hbs = create({
-	extname: 'hbs',
-	layoutsDir: layoutFolderPath,
-	defaultLayout: defaultLayoutFolderPath,
-	partialsDir: partialsFolderPath,
-});
-
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
 app.set('views', viewsFolderPath);
+app.set('view engine', 'ejs');
 
 // Haciendo disponible la carpeta public
 const publicFolderPath = path.resolve(__dirname, '../../public');

@@ -39,11 +39,12 @@ class Container {
 			const data = await this.readFile();
 			if (data.length > 0) {
 				res.status(200).render('productList', { data: data });
+				return;
 			} else {
-				res.status(404).send({ data: null });
+				res.status(404).render('productList', { data: [] });
+				return;
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -53,6 +54,7 @@ class Container {
 
 		if (isNaN(id)) {
 			res.status(400).send({ Error: 'El id buscado debe ser tipo numerico' });
+			return;
 		}
 
 		try {
@@ -61,11 +63,12 @@ class Container {
 			const productById = data.filter((e: IProduct) => e.id === id);
 			if (productById.length > 0) {
 				res.status(200).send({ product: productById });
+				return;
 			} else {
 				res.status(404).send({ product: null });
+				return;
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -94,15 +97,16 @@ class Container {
 				const newData = { id: oldData.length + 1, ...newProduct };
 				oldData.push(newData);
 				await this.writeFile(oldData);
-				res.status(200).send({ saved_data: newData });
+				res.status(200).redirect('nuevo');
+				return;
 			} else {
 				const initialProductObj = { id: 1, ...newProduct };
 				const initialArrOfData = [initialProductObj];
 				await this.writeFile(initialArrOfData);
-				res.status(200).send({ saved_data: initialProductObj });
+				res.status(200).redirect('nuevo');
+				return;
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};
@@ -132,8 +136,10 @@ class Container {
 				oldData.splice(objIndex, 1, objToUpdate);
 				this.writeFile(oldData);
 				res.send({ msg: objToUpdate });
+				return;
 			} else {
 				res.status(404).send({ Error: { status: 'No existe el id' } });
+				return;
 			}
 		} catch (err: any) {
 			next(err);
@@ -152,6 +158,7 @@ class Container {
 			const data = await this.readFile();
 			if (data.length === 0) {
 				res.status(404).send({ product: null });
+				return;
 			}
 
 			const checkId = data.find((e: IProduct) => e.id === id);
@@ -160,11 +167,12 @@ class Container {
 				const newData = data.filter((e: IProduct) => e.id !== id);
 				await fs.writeFile(this.filePath, JSON.stringify(newData, null, '\t'));
 				res.status(200).send({ status: 'successfull' });
+				return;
 			} else {
 				res.status(404).send({ product: null });
+				return;
 			}
 		} catch (err: any) {
-			req.statusCode = 404;
 			next(err);
 		}
 	};

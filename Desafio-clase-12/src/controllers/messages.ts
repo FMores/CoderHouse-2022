@@ -1,11 +1,10 @@
 import fs from 'fs/promises';
+import moment from 'moment';
 import path from 'path';
 
-interface IProduct {
-	id?: number;
-	title: string;
-	price: number;
-	thumbnail: string;
+interface IMessage {
+	author: string;
+	text: string;
 }
 
 class Container {
@@ -28,7 +27,7 @@ class Container {
 		return dataObj;
 	};
 
-	private writeFile = async (data: IProduct[]) => {
+	private writeFile = async (data: IMessage[]) => {
 		await fs.writeFile(this.filePath, JSON.stringify(data, null, '\t'));
 	};
 
@@ -50,29 +49,20 @@ class Container {
 		}
 	};
 
-	public save = async (newProduct: IProduct) => {
-		if (
-			!(newProduct['title'] || typeof newProduct['title'] === 'string') ||
-			!(newProduct['price'] || typeof newProduct['price'] === 'number') ||
-			!(newProduct['thumbnail'] || typeof newProduct['thumbnail'] === 'string')
-		) {
-			throw Error(
-				'El producto ingresado debe contener los siguientes datos: title: string, price: number, thumbnail: string',
-			);
-		}
-
+	public save = async (newMessage: IMessage) => {
+		const date = moment().format('DD-MM-YY hh:mm:ss a');
 		try {
 			const stats = await this.fileStat();
 			if (stats.size > 2) {
-				const oldData = await this.readFile();
-				const newData = { id: oldData.length + 1, ...newProduct };
-				oldData.push(newData);
-				await this.writeFile(oldData);
+				const oldMsg = await this.readFile();
+				const newData = { id: oldMsg.length + 1, timestamp: date, ...newMessage };
+				oldMsg.push(newData);
+				await this.writeFile(oldMsg);
 				return;
 			} else {
-				const initialProductObj = { id: 1, ...newProduct };
-				const initialArrOfData = [initialProductObj];
-				await this.writeFile(initialArrOfData);
+				const newMsg = { id: 1, timestamp: date, ...newMessage };
+				const initArrOfMsg = [newMsg];
+				await this.writeFile(initArrOfMsg);
 				return;
 			}
 		} catch (err: any) {
@@ -85,4 +75,4 @@ class Container {
 	};
 }
 
-export const productController = new Container('products.txt');
+export const messagesController = new Container('messages.txt');

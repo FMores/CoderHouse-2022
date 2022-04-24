@@ -1,8 +1,13 @@
 import io, { Server as ioServer } from 'socket.io';
 import { Server as httpServer } from 'http';
+import { messagesController } from '../controllers/messages';
+import { productController } from '../controllers/products';
 
-// Con esta clase iniciamos la conexion de socket.
-// Con la funcion init evitamos que se creen dos instancias o conexiones de socket.
+//Datos utiles
+
+//Para responder a un solo cliente => socket.emit('peticion', respuesta)
+//Para responder a todos => this.ioServer.emit('peticion', respuesta)
+//Para responder a todos menos al que envia el mensaje => socket.broadcast.emit('peticion', respuesta)
 
 class IoService {
 	private ioServer: ioServer | undefined;
@@ -14,8 +19,20 @@ class IoService {
 		} else {
 			this.ioServer = new io.Server(httpServer);
 
-			this.ioServer.on('connection', (socket) => {
-				console.log('se conecto un nuevo cliente');
+			this.ioServer.on('connection', async (socket) => {
+				// Chat-Room
+				socket.emit('mensajes', await messagesController.getAll());
+				socket.on('new-msg', async (data) => {
+					await messagesController.save(data);
+					this.ioServer?.emit('mensajes', await messagesController.getAll());
+				});
+
+				// Produc List
+				socket.emit('product-list', await productController.getAll());
+				socket.on('new_product', async (data) => {
+					await productController.save(data);
+					this.ioServer?.emit('product-list', await productController.getAll());
+				});
 			});
 		}
 	};

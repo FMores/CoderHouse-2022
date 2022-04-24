@@ -12,10 +12,10 @@ export const app = express();
 //Obtengo los path absolutos de las carpetas necesarias.
 const layoutFolderPath = path.resolve(__dirname, '../../views/layouts');
 const defaultLayoutFolderPath = path.resolve(__dirname, '../../views/layouts/main');
-const partialsFolderPath = path.resolve(__dirname, '../../views/partials');
+const partialsFolderPath = path.resolve(__dirname, '../../views/partial');
 const viewsFolderPath = path.resolve(__dirname, '../../views');
 
-const hbs = create({
+export const hbs = create({
 	extname: 'hbs',
 	layoutsDir: layoutFolderPath,
 	defaultLayout: defaultLayoutFolderPath,
@@ -36,11 +36,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //Configurando rutas
 app.use('/api', indexRouter);
-
-// test sin utilizar router
-app.get('/api2', (req, res) => {
-	res.render('newProduct');
-});
 
 //Manejo de errores
 app.use(notFound);

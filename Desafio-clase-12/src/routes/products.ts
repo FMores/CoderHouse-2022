@@ -1,24 +1,12 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { productController } from '../controllers/products';
 import upload from '../middleware/multer';
 
 const router = Router();
 
 //Ruta para agregar un producto nuevo mediante un formulario
-router.get('/nuevo', (req: Request, res: Response) => {
-	res.render('newProduct');
+router.get('/', (req: Request, res: Response) => {
+	res.render('index');
 });
-
-//Rutas para el manejo de productos.
-router.get('/lista', productController.getAll);
-
-router.get('/:id', productController.getById);
-
-router.post('/guardar', productController.save);
-
-router.put('/:id', productController.updateById);
-
-router.delete('/:id', productController.deleteById);
 
 // Rutas para utilizar con multer
 router.post(

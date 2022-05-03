@@ -1,7 +1,9 @@
 import { errorHandler, notFound } from '../middleware/errorHandler';
 import { create } from 'express-handlebars';
 import indexRouter from '../routes/index';
+import compression from 'compression';
 import express from 'express';
+import helmet from 'helmet';
 import path from 'path';
 
 export const app = express();
@@ -22,9 +24,11 @@ app.set('views', path.resolve(__dirname, '../../views'));
 const publicFolderPath = path.resolve(__dirname, '../../public');
 app.use(express.static(publicFolderPath));
 
-//Permite que express pueda manejar los datos de post y put.
-app.use(express.json());
+//Middlewares basicos necesarios.
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(compression());
+app.use(helmet());
 
 //Configurando rutas
 app.use('/api', indexRouter);

@@ -1,88 +1,56 @@
-import fs from 'fs/promises';
-import path from 'path';
+import { NextFunction, Request, Response } from 'express';
+import { product_persistence } from '../persistence/products';
 
-interface IProduct {
-	id?: number;
-	title: string;
-	price: number;
-	thumbnail: string;
-}
-
-class Container {
-	constructor(private fileName: string, private filePath = path.resolve(__dirname, `../db/${fileName}`)) {}
-
-	private fileStat = async () => {
-		const fileStats = await fs.stat(this.filePath);
-		if (fileStats.size === 0) {
-			await fs.writeFile(this.filePath, JSON.stringify([]));
-			const fileInitialized = await fs.stat(this.filePath);
-			return fileInitialized;
-		}
-		return fileStats;
-	};
-
-	private readFile = async () => {
-		await this.fileStat();
-		const dataStr = await fs.readFile(this.filePath, 'utf8');
-		const dataObj = JSON.parse(dataStr);
-		return dataObj;
-	};
-
-	private writeFile = async (data: IProduct[]) => {
-		await fs.writeFile(this.filePath, JSON.stringify(data, null, '\t'));
-	};
-
-	public getAll = async () => {
+class Product_controller {
+	public get = async (req: Request, res: Response, next: NextFunction) => {
+		const { id } = req.params;
 		try {
-			await this.fileStat();
-			const data = await this.readFile();
-			if (data.length > 0) {
-				return data;
-			} else {
-				return null;
-			}
-		} catch (err: any) {
-			if (err.code === 'ENOENT') {
-				console.log(`No existe el archivo especificado o el nombre es incorrecto => ${this.fileName}`);
-			} else {
-				console.log(err);
-			}
-		}
-	};
-
-	public save = async (newProduct: IProduct) => {
-		if (
-			!(newProduct['title'] || typeof newProduct['title'] === 'string') ||
-			!(newProduct['price'] || typeof newProduct['price'] === 'number') ||
-			!(newProduct['thumbnail'] || typeof newProduct['thumbnail'] === 'string')
-		) {
-			throw Error(
-				'El producto ingresado debe contener los siguientes datos: title: string, price: number, thumbnail: string',
-			);
-		}
-
-		try {
-			const stats = await this.fileStat();
-			if (stats.size > 2) {
-				const oldData = await this.readFile();
-				const newData = { id: oldData.length + 1, ...newProduct };
-				oldData.push(newData);
-				await this.writeFile(oldData);
+			if (id) {
+				const product_by_id = await product_persistence.getById(id);
+				res.status(200).send({ product: product_by_id });
 				return;
 			} else {
-				const initialProductObj = { id: 1, ...newProduct };
-				const initialArrOfData = [initialProductObj];
-				await this.writeFile(initialArrOfData);
+				const current_product_list = await product_persistence.getAll();
+				res.status(200).send({ products: current_product_list });
 				return;
 			}
 		} catch (err: any) {
-			if (err.code === 'ENOENT') {
-				console.log(`No existe el archivo especificado o el nombre es incorrecto => ${this.fileName}`);
-			} else {
-				console.log(err);
-			}
+			next(err);
+		}
+	};
+
+	public save = async (req: Request, res: Response, next: NextFunction) => {
+		const { name, description, price, stock, thumbnail } = req.body;
+		const new_product = { name, description, price, stock, thumbnail };
+		try {
+			const product_saved = await product_persistence.save(new_product);
+			res.status(200).send({ product_added: product_saved });
+		} catch (err: any) {
+			next(err);
+		}
+	};
+
+	public updateById = async (req: Request, res: Response, next: NextFunction) => {
+		const { name, price, thumbnail, description, stock } = req.body;
+		const new_data = { name, price, thumbnail, description, stock };
+		const { id } = req.params;
+		try {
+			const product_updated = await product_persistence.updateById({ id, ...new_data });
+			res.status(200).send({ product_updated });
+		} catch (err: any) {
+			next(err);
+		}
+	};
+
+	public deleteById = async (req: Request, res: Response, next: NextFunction) => {
+		const { id } = req.params;
+		try {
+			await product_persistence.deleteById(id);
+			res.status(200).send({ status: 'Successfully completed' });
+		} catch (err: any) {
+			next(err);
 		}
 	};
 }
 
-export const productController = new Container('products.txt');
+export const product_controller = new Product_controller();

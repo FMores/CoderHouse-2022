@@ -1,0 +1,42 @@
+1) Comprobar que el archivo mongod.conf tenga la siguiente linea de codigo o que no la tenga:
+
+    authorization: 
+            disabled
+
+    En caso de que lo tenga y esté "enabled", cambiar a "disabled" y luego realizar un restart del servicio de mongo.
+    Para mac se utiliza el siguiente codigo: brew services restart mongodb-community
+    Luego de verificar esto, podras generar el usuario.
+
+
+2) mongo
+
+3) use admin
+
+4) db.createUser( { user:'pepe', pwd:'asd123', roles: [ { role:'read', db:'ecommerce' } ] } )
+    si el mensaje indica que todo salio bien, continuamos al paso 5.
+
+5) salimos de mongo con el comando "exit"
+
+6) Vamos nuevamente al archivo "mongod.conf" y cambiamos el valor de authorization a "enabled"
+
+7) brew services restart mongodb-community
+
+8) volvemos a mongo e intentamos ingresar con el usuario creado
+    mongo -u 'pepe' -p 'asd123'
+
+9) si todo salio bien, corremos el comando "show dbs" y solo nos deberia mostrar la db "ecommerce". Si el campo esta vacio es por que se realizo 
+   mal alguno de los pasos anteriores y tendras que volver a comenzar.
+
+10) Corremos el comando para ver las collections e ingresamos a products. Luego intentamos insertar un nuevo producto, si la configuracion del usuario
+    fue correcta nos deberia dar un error de diciendo que no estas autorizado.
+
+    use ecommerce
+    show collections => messages y products
+    db.products.find() => devuelve todos los productos.
+    db.products.insert({title:'Gorra',price:5500,thumbnail:'photo-gorra', timestamp: new Timestamp()}) => esto nos deberia dar error ya que es solo
+    para lectura.
+
+11) Una vez finalizado el test, salimos de mongo con el comando "exit". Vamos al archivo "mongod.conf" y cambiamos el valor de authorization a "disabled".
+    realizamos un restart del servicio de mongo => brew services restart mongodb-community
+
+12) Mongo deberia volver a funcionar sin solicitudes de autorizaciones y podras ver nuevamente todas las DB por defecto.

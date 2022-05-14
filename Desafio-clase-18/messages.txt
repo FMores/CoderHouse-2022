@@ -1,0 +1,30 @@
+mongo
+
+use ecommerce
+
+db.createCollection('messages')
+
+
+Agregar 10 documentos con valores distintos a las colecciones mensajes y productos. 
+El formato de los documentos debe estar en correspondencia con el que venimos utilizando en el entregable con base de datos MariaDB. 
+
+db.messages.insertMany([
+    {email:'fabricio@gmail.com',text:'Hola Cristian, como estas?',date: new Timestamp()},
+    {email:'cristian@gmail.com',text:'Hola Fabri, todo bien che. Vos?',date: new Timestamp()},
+    {email:'fabricio@gmail.com',text:'Bien bien. Che, te queria invitar a un asado el viernes por la noche.',date: new Timestamp()},
+    {email:'cristian@gmail.com',text:'Seee papa, obvio que voy. Tengo que llevar algo?',date: new Timestamp()},
+    {email:'fabricio@gmail.com',text:'Tu plato y cubiertos nada mas, y lo que vas a tomar. Si no, vemos aca que tomamos.',date: new Timestamp()},
+    {email:'cristian@gmail.com',text:'Genial papa. Donde se hace? Pasa dire...',date: new Timestamp()},
+    {email:'fabricio@gmail.com',text:'En mi casa. Hay mas lugar y vamos a estar comodos.',date: new Timestamp()},
+    {email:'cristian@gmail.com',text:'Dale dale. Nos vemos viejito.',date: new Timestamp()},
+    {email:'fabricio@gmail.com',text:'Dale pa, nos vemos.',date: new Timestamp()},
+    {email:'cristian@gmail.com',text:'Abrazo.',date: new Timestamp()}
+])
+
+
+Listar todos los documentos en cada colección.
+db.messages.find().pretty()
+
+
+Mostrar la cantidad de documentos almacenados en cada una de ellas.
+db.messages.count()

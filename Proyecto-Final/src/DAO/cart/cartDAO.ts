@@ -1,8 +1,8 @@
-import { date_creator } from '../utils/date';
-import { code_creator } from '../utils/uuid';
+import { date_creator } from '../../utils/date';
+import { code_creator } from '../../utils/uuid';
 import fs from 'fs/promises';
 import path from 'path';
-import { product_persistence } from './products';
+import { product_persistence } from '../products/productDAO';
 import e from 'express';
 
 interface IProduct {

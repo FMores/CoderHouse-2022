@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { cart_persistence } from '../persistence/cart';
+import { cart_persistence } from '../DAO/cart/cartDAO';
 
 class Cart_controller {
 	public getAll = async (req: Request, res: Response, next: NextFunction) => {

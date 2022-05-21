@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { product_persistence } from '../persistence/products';
+import { product_persistence } from '../DAO/products/productDAO';
 
 class Product_controller {
 	public get = async (req: Request, res: Response, next: NextFunction) => {

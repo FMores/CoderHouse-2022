@@ -1,6 +1,6 @@
 import { httpServer } from './services/server';
 import { ioService } from './services/socket';
-import config from './config';
+import config from './config/indexConfig';
 
 //Iniciar server utilizando el modulo Http y socket
 httpServer.listen(config.server_port, () => {

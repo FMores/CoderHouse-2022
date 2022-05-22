@@ -1,0 +1,22 @@
+[
+	{
+		"_id": "PID-bbfd99f8-c70d-4e06-8062-9138ef3c76b3",
+		"code": "PC-df9f481e-bcfa-47e6-9f08-02d999ac1d9b",
+		"timestamp": "22-05-22 11:20:46 am",
+		"name": "Coca-cola",
+		"description": "Coca-cola de 1L",
+		"price": 23,
+		"stock": 30,
+		"thumbnail": "image-coca-cola"
+	},
+	{
+		"_id": "PID-c7ef9db3-4901-445a-b42e-760274add5c3",
+		"code": "PC-4f0c13fb-e0d0-415f-81c2-705d3852d52b",
+		"timestamp": "22-05-22 11:20:46 am",
+		"name": "Coca-cola",
+		"description": "Coca-cola de 1L",
+		"price": 23,
+		"stock": 30,
+		"thumbnail": "image-coca-cola"
+	}
+]

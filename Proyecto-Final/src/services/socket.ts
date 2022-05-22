@@ -13,7 +13,7 @@ class IoService {
 	private ioServer: ioServer | undefined;
 
 	init = (httpServer: httpServer) => {
-		console.log('Iniciando conexión socket');
+		console.log('Starting socket connection');
 		if (this.ioServer) {
 			console.log('Una conexión socket ya se encuentra establecida.');
 		} else {

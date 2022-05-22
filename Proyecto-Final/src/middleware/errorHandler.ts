@@ -6,17 +6,14 @@ export const notFound = (req: Request, res: Response, next: NextFunction) => {
 	next(error);
 };
 
-export const errorHandler: ErrorRequestHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
-	if (res.headersSent) {
-		return next(error);
-	} else if (error.code === 'ENOENT') {
-		res.status(req.statusCode || 500).render('pageNotFound');
-		return;
-	}
-	res.status(req.statusCode || 500).send({
-		Error: {
-			code: error.code,
-			msg: error.message,
-		},
-	});
+export const errorHandler: ErrorRequestHandler = (
+	err: any,
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const status = err.status || 500;
+	const message = err.message || 'Something went wrong';
+	const stack = err.stack;
+	res.status(status).send({ status, message, stack });
 };

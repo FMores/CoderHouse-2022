@@ -1,56 +1,29 @@
 import { NextFunction, Request, Response } from 'express';
-import { product_persistence } from '../DAO/products/productDAO';
+import { productAPI } from '../API/productAPI';
 
-class Product_controller {
-	public get = async (req: Request, res: Response, next: NextFunction) => {
+class ProductController {
+	public async get(req: Request, res: Response) {
 		const { id } = req.params;
-		try {
-			if (id) {
-				const product_by_id = await product_persistence.getById(id);
-				res.status(200).send({ product: product_by_id });
-				return;
-			} else {
-				const current_product_list = await product_persistence.getAll();
-				res.status(200).send({ products: current_product_list });
-				return;
-			}
-		} catch (err: any) {
-			next(err);
-		}
-	};
+		const dataReceived = await productAPI.get(id);
+		res.status(200).send(dataReceived);
+	}
 
-	public save = async (req: Request, res: Response, next: NextFunction) => {
-		const { name, description, price, stock, thumbnail } = req.body;
-		const new_product = { name, description, price, stock, thumbnail };
-		try {
-			const product_saved = await product_persistence.save(new_product);
-			res.status(200).send({ product_added: product_saved });
-		} catch (err: any) {
-			next(err);
-		}
-	};
+	public async add(req: Request, res: Response) {
+		const productAdded = await productAPI.add(req.body);
+		res.status(200).send({ msg: 'Product added successfully', product: productAdded });
+	}
 
-	public updateById = async (req: Request, res: Response, next: NextFunction) => {
-		const { name, price, thumbnail, description, stock } = req.body;
-		const new_data = { name, price, thumbnail, description, stock };
+	public async update(req: Request, res: Response) {
 		const { id } = req.params;
-		try {
-			const product_updated = await product_persistence.updateById({ id, ...new_data });
-			res.status(200).send({ product_updated });
-		} catch (err: any) {
-			next(err);
-		}
-	};
+		const updatedProduct = await productAPI.update(id, req.body);
+		res.status(200).send({ msg: 'Product updated successfully', product: updatedProduct });
+	}
 
-	public deleteById = async (req: Request, res: Response, next: NextFunction) => {
+	public async delete(req: Request, res: Response) {
 		const { id } = req.params;
-		try {
-			await product_persistence.deleteById(id);
-			res.status(200).send({ status: 'Successfully completed' });
-		} catch (err: any) {
-			next(err);
-		}
-	};
+		await productAPI.delete(id);
+		res.status(200).send({ msg: 'Product delete successfully' });
+	}
 }
 
-export const product_controller = new Product_controller();
+export const productController = new ProductController();

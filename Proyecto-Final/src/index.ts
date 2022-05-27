@@ -3,7 +3,7 @@ import { ioService } from './services/socket';
 import config from './config/indexConfig';
 
 //Iniciar server utilizando el modulo Http y socket
-httpServer.listen(config.server_port, () => {
-	console.log(`Server running on port:${config.server_port}`);
+httpServer.listen(config.SERVER_PORT, () => {
+	console.log(`Server running on port:${config.SERVER_PORT}`);
 	ioService.init(httpServer);
 });

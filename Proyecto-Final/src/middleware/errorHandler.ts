@@ -14,6 +14,5 @@ export const errorHandler: ErrorRequestHandler = (
 ) => {
 	const status = err.status || 500;
 	const message = err.message || 'Something went wrong';
-	const stack = err.stack;
-	res.status(status).send({ status, message, stack });
+	res.status(status).send({ status, message });
 };

@@ -10,7 +10,7 @@ export class FileSystemDAO implements CommonMethodsDAO {
 		this.filePath = fileLocation;
 	}
 
-	private async fileStat() {
+	private async fileStat(): Promise<import('fs').Stats> {
 		const fileStats = await fs.stat(this.filePath);
 		if (fileStats.size === 0) {
 			await fs.writeFile(this.filePath, JSON.stringify([]));
@@ -20,14 +20,14 @@ export class FileSystemDAO implements CommonMethodsDAO {
 		return fileStats;
 	}
 
-	private async readFile() {
+	private async readFile(): Promise<any> {
 		await this.fileStat();
 		const dataStr = await fs.readFile(this.filePath, 'utf8');
 		const dataObj = JSON.parse(dataStr);
 		return dataObj;
 	}
 
-	private async writeFile(data: ProductI[]) {
+	private async writeFile(data: ProductI[]): Promise<void> {
 		await fs.writeFile(this.filePath, JSON.stringify(data, null, '\t'));
 	}
 
@@ -89,12 +89,16 @@ export class FileSystemDAO implements CommonMethodsDAO {
 		}
 	}
 
-	public async update(id: string, newProductData: NewProductI): Promise<ProductI> {
+	public async update(id: string, newProductData: NewProductI): Promise<ProductI | null> {
 		await this.fileStat();
 
 		const currentProductList = await this.readFile();
 
 		const searchedProductIndex = currentProductList.findIndex((el: ProductI) => el._id === id);
+
+		if (searchedProductIndex === -1) {
+			return null;
+		}
 
 		let productToUpdate = currentProductList[searchedProductIndex];
 
@@ -107,9 +111,17 @@ export class FileSystemDAO implements CommonMethodsDAO {
 		return updatedProduct;
 	}
 
-	public async delete(id: string): Promise<void> {
+	public async delete(id: string): Promise<null | undefined> {
 		const currentProductList = await this.readFile();
+
+		const searchedProductIndex = currentProductList.findIndex((el: ProductI) => el._id === id);
+
+		if (searchedProductIndex === -1) {
+			return null;
+		}
+
 		const filteredProductList = currentProductList.filter((e: ProductI) => e._id !== id);
+
 		await this.writeFile(filteredProductList);
 	}
 }

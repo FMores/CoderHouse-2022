@@ -25,6 +25,6 @@
 		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
 		"noImplicitAny": false
 	},
-	"include": ["./src/**/*", "src/knexfile.ts"],
+	"include": ["./src/**/*", "src/knexfile.ts", "DB"],
 	"exclude": [".node_modules", "**/*.spect.ts"]
 }

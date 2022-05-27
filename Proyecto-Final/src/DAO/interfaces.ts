@@ -13,7 +13,6 @@ export interface ProductI {
 	_id: string;
 	name: string;
 	description: string;
-	code: number | string;
 	stock: number;
 	price: number;
 	thumbnail: string;
@@ -21,10 +20,10 @@ export interface ProductI {
 }
 
 export interface CommonMethodsDAO {
-	get(id?: string | undefined): Promise<ProductI[] | undefined>;
+	get(id?: string): Promise<ProductI[]>;
 	add(data: NewProductI): Promise<ProductI>;
-	update(id: string, newProductData: NewProductI): Promise<ProductI>;
-	delete(id: string): Promise<void>;
+	update(id: string, newProductData: NewProductI): Promise<ProductI | null>;
+	delete(id: string): Promise<null | undefined>;
 }
 
 export interface ProductBaseClassFirebase {
@@ -34,7 +33,7 @@ export interface ProductBaseClassFirebase {
 	delete(id: string): Promise<void>;
 }
 
-export enum PercistenceType {
+export enum PersistenceType {
 	Memory = 'Memory',
 	FileSystem = 'FSystem',
 	MySQL = 'MySQL',

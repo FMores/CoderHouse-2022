@@ -50,8 +50,12 @@ export class MemoryDAO implements CommonMethodsDAO {
 		return newProduct;
 	}
 
-	public async update(id: string, newProductData: NewProductI): Promise<ProductI> {
+	public async update(id: string, newProductData: NewProductI): Promise<ProductI | null> {
 		const searchedProductIndex = await this.findIndex(id);
+
+		if (searchedProductIndex === -1) {
+			return null;
+		}
 
 		let productToUpdate = this.products[searchedProductIndex];
 
@@ -62,7 +66,14 @@ export class MemoryDAO implements CommonMethodsDAO {
 		return updatedProduct;
 	}
 
-	public async delete(id: string): Promise<void> {
+	public async delete(id: string): Promise<null | undefined> {
+		const searchedProductIndex = this.products.findIndex((el: ProductI) => el._id === id);
+
+		if (searchedProductIndex === -1) {
+			return null;
+		}
+
 		this.products = this.products.filter((el: ProductI) => el._id !== id);
+		return;
 	}
 }

@@ -1,6 +1,7 @@
 import path from 'path';
 import { PersistenceType } from '../interfaces';
 import { FileSystemDAO } from './fileSystemDAO';
+import { FireBaseDAO } from './firebaseDAO';
 import { MemoryDAO } from './memoryDAO';
 import { MongoDAO } from './mongoDAO';
 import { MysqlDAO } from './mysqlDAO';
@@ -25,6 +26,9 @@ export class ProductFactoryDAO {
 			case PersistenceType.SQLite3:
 				console.log('Starting persistence in SQLite3');
 				return new Sqlite3DAO(PersistenceType.SQLite3);
+			case PersistenceType.FireBase:
+				console.log('Starting persistence in FireBase');
+				return new FireBaseDAO();
 			default:
 				PersistenceType.Memory;
 				console.log('Starting persistence in Local Memory');

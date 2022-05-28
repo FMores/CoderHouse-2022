@@ -8,4 +8,5 @@ export default {
 	MONGO_ATLAS_URI: process.env.MONGO_ATLAS_URI || 'your_mongo_atlas_uri',
 	MYSQL_ENV: process.env.MYSQL_ENV || 'your_knex_config_enviroment',
 	SQLITE3_ENV: process.env.SQLITE3_ENV || 'your_knex_config_enviroment',
+	FIREBASE_ACCOUNT_CONFIG: process.env.FIREBASE_ACCOUNT_CONFIG || 'your_FIREBASE_ACCOUNT_CONFIG',
 };

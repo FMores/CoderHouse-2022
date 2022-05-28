@@ -33,6 +33,7 @@
 		"express": "^4.17.1",
 		"express-async-handler": "^1.2.0",
 		"express-handlebars": "^6.0.3",
+		"firebase-admin": "^10.2.0",
 		"helmet": "^5.0.2",
 		"joi": "^17.6.0",
 		"knex": "^2.0.0",

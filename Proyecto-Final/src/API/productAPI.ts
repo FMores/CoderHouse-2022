@@ -1,4 +1,3 @@
-import { array } from 'joi';
 import { CommonMethodsDAO, NewProductI, PersistenceType, ProductI } from '../DAO/interfaces';
 import { ProductFactoryDAO } from '../DAO/products/productFactory';
 
@@ -6,7 +5,7 @@ class ProductAPI {
 	private product: CommonMethodsDAO | undefined;
 
 	constructor() {
-		this.product = ProductFactoryDAO.get(PersistenceType.SQLite3);
+		this.product = ProductFactoryDAO.get(PersistenceType.FireBase);
 	}
 
 	public async get(id: string): Promise<ProductI[]> {

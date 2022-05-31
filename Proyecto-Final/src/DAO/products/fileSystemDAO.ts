@@ -3,6 +3,8 @@ import { date_creator } from '../../utils/date';
 import { code_creator } from '../../utils/uuid';
 import fs from 'fs/promises';
 
+const userId = '628c290ebeed9a7b4df6b722';
+
 export class FileSystemDAO implements CommonMethodsDAO {
 	private filePath: string;
 

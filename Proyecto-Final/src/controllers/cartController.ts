@@ -1,66 +1,54 @@
 import { NextFunction, Request, Response } from 'express';
-//import { cart_persistence } from '../DAO/cart/cartDAO';
+import { cartAPI } from '../API/cartAPI';
 
-// class Cart_controller {
-// 	public getAll = async (req: Request, res: Response, next: NextFunction) => {
-// 		try {
-// 			const current_list_of_carts = await cart_persistence.getAll();
-// 			res.status(200).send({ Cart_list: current_list_of_carts });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
+class CartController {
+	// Harcoded userId = '628c290ebeed9a7b4df6b722';
 
-// 	public create = async (req: Request, res: Response, next: NextFunction) => {
-// 		try {
-// 			const cart_id = await cart_persistence.create();
-// 			res.status(200).send({ cart_id: cart_id });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
+	public getAll = async (req: Request, res: Response, next: NextFunction) => {
+		const result = await cartAPI.get();
 
-// 	public add_product = async (req: Request, res: Response, next: NextFunction) => {
-// 		const { id } = req.params;
-// 		const { id_prod } = req.body;
-// 		try {
-// 			const cart = await cart_persistence.add_product(id, id_prod);
-// 			res.status(200).send({ cart });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
+		res.status(200).send({ carts: result });
+	};
 
-// 	public cart_products = async (req: Request, res: Response, next: NextFunction) => {
-// 		const { id } = req.params;
+	public get = async (req: Request, res: Response, next: NextFunction) => {
+		const { id } = req.params;
+		const result = await cartAPI.get(id);
 
-// 		try {
-// 			const cart_products = await cart_persistence.get_cart_products(id);
-// 			res.status(200).send({ cart_id: id, products: cart_products });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
+		if (result.length === 0) {
+			res.status(404).send({ status: 'Not Found' });
+			return;
+		}
 
-// 	public delete_cart = async (req: Request, res: Response, next: NextFunction) => {
-// 		const { id } = req.params;
-// 		try {
-// 			await cart_persistence.delete_cart(id);
-// 			res.status(200).send({ Status: 'Successfully complete' });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
+		res.status(200).send({ cart: result });
+		return;
+	};
 
-// 	public delete_product = async (req: Request, res: Response, next: NextFunction) => {
-// 		const { id, id_prod } = req.params;
-// 		try {
-// 			await cart_persistence.delete_product(id, id_prod);
-// 			res.status(200).send({ Status: 'Successfully complete' });
-// 		} catch (err: any) {
-// 			next(err);
-// 		}
-// 	};
-// }
+	public add = async (req: Request, res: Response, next: NextFunction) => {
+		const { id, id_prod } = req.params;
 
-// export const cart_controller = new Cart_controller();
+		const result = await cartAPI.add(id, id_prod);
+
+		if (result.length === 0) {
+			res.status(404).send({ status: 'Not Found' });
+			return;
+		}
+
+		res.status(200).send({ newProduct: result });
+		return;
+	};
+
+	public delete = async (req: Request, res: Response, next: NextFunction) => {
+		const { id, id_prod } = req.params;
+
+		const result = await cartAPI.delete(id, id_prod);
+
+		if (result && result.length === 0) {
+			res.status(404).send({ status: 'Not Found' });
+			return;
+		}
+
+		res.status(200).send({ Status: 'Delete product by productId and userId' });
+	};
+}
+
+export const cartController = new CartController();

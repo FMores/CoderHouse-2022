@@ -1,4 +1,4 @@
-import { post_schema, put_schema } from '../models/joi/joi_schemas';
+import { post_schema, put_schema } from '../models/joi_schemas';
 import { productController } from '../controllers/productController';
 import { validator } from '../middleware/joi_validation';
 import isAdmin from '../middleware/isAuth';

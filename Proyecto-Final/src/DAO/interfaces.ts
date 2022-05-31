@@ -26,6 +26,12 @@ export interface CommonMethodsDAO {
 	delete(id: string): Promise<null | undefined>;
 }
 
+export interface CartMethodsDAO<T> {
+	get(id?: string): Promise<T>;
+	add(id: string, id_prod: string, newProductData?: NewProductI): Promise<T>;
+	delete(id: string, id_prod: string): Promise<T>;
+}
+
 export enum PersistenceType {
 	Memory = 'Memory',
 	FileSystem = 'FSystem',
@@ -34,4 +40,12 @@ export enum PersistenceType {
 	Mongo = 'Mongo',
 	Mongo_Atlas = 'Mongo_Atlas',
 	FireBase = 'FireBase',
+}
+
+export interface CartI {
+	userId: string;
+	items: [ProductI];
+	subTotal: number;
+	quantity: number;
+	status: boolean;
 }

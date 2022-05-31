@@ -5,7 +5,7 @@ class ProductAPI {
 	private product: CommonMethodsDAO | undefined;
 
 	constructor() {
-		this.product = ProductFactoryDAO.get(PersistenceType.FireBase);
+		this.product = ProductFactoryDAO.get(PersistenceType.Memory);
 	}
 
 	public async get(id: string): Promise<ProductI[]> {

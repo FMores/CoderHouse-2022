@@ -1,14 +1,15 @@
 import { CommonMethodsDAO, NewProductI, PersistenceType, ProductI } from '../interfaces';
-import productModel from '../../models/product/productSchema';
+
 import { mongoConnection } from '../../services/mongoService';
 import mongoose from 'mongoose';
+import mongodbProductModel from '../../models/mongodb.product.model';
 
 export class MongoDAO implements CommonMethodsDAO {
 	private product: any;
 
 	constructor(persistence: PersistenceType) {
 		mongoConnection(persistence);
-		this.product = productModel;
+		this.product = mongodbProductModel;
 	}
 
 	private async checkId(id: string): Promise<null | undefined> {

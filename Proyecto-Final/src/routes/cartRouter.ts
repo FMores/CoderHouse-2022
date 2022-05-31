@@ -1,25 +1,23 @@
-// import { Router } from 'express';
-// import isAdmin from '../middleware/isAuth';
-// import { cart_controller } from '../controllers/cartController';
+import { Router } from 'express';
+import isAdmin from '../middleware/isAuth';
+import { cartController } from '../controllers/cartController';
+import { validator } from '../middleware/joi_validation';
+import { post_schema } from '../models/joi_schemas';
 
-// const router = Router();
+const router = Router();
 
-// // GET: '/' - Me permite listar todos los carritos - solo para admin
-// router.get('/', isAdmin, cart_controller.getAll);
+// Harcoded userId = '628c290ebeed9a7b4df6b722';
 
-// // GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
-// router.get('/:id/productos', cart_controller.cart_products);
+// GET: '/' - Me permite listar todos los carritos - solo para admin
+router.get('/', isAdmin, cartController.getAll);
 
-// // POST: '/' - Crea un carrito y devuelve su id.
-// router.post('/', cart_controller.create);
+// GET: '/:id/cart' - Me permite listar todos los productos guardados en el carrito pasando el id del usuario
+router.get('/:id', cartController.get);
 
-// // POST: '/:id/productos' - Para incorporar productos al carrito por su id de carrito, se pasa id de producto por body
-// router.post('/:id/productos', cart_controller.add_product);
+// POST: '/:id/cart' - Para incorporar productos al carrito utilizando el id del usuario y el id de producto por params
+router.post('/:id/product/:id_prod', validator(post_schema), cartController.add);
 
-// // DELETE: '/:id' - Vacía un carrito y lo elimina.
-// router.delete('/:id', cart_controller.delete_cart);
+// DELETE: '/:id/cart/:id_prod' - Eliminar un producto del carrito utilizando el id del usuario y el id de producto por params
+router.delete('/:id/product/:id_prod', cartController.delete);
 
-// // DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
-// router.delete('/:id/productos/:id_prod', cart_controller.delete_product);
-
-// export default router;
+export default router;

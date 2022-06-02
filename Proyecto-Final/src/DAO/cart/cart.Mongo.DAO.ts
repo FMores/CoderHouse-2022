@@ -1,5 +1,5 @@
 import { CartMethodsDAO, PersistenceType } from '../interfaces';
-import { mongoConnection } from '../../services/mongoService';
+import { mongoConnection } from '../../services/Mongo.Service';
 import mongodbCartModel from '../../models/mongodb.cart.model';
 import mongodbProductModel from '../../models/mongodb.product.model';
 

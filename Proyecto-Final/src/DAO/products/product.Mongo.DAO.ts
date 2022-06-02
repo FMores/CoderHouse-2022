@@ -1,6 +1,6 @@
 import { CommonMethodsDAO, NewProductI, PersistenceType, ProductI } from '../interfaces';
 
-import { mongoConnection } from '../../services/mongoService';
+import { mongoConnection } from '../../services/Mongo.Service';
 import mongoose from 'mongoose';
 import mongodbProductModel from '../../models/mongodb.product.model';
 

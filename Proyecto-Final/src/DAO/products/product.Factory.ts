@@ -1,11 +1,11 @@
 import path from 'path';
 import { PersistenceType } from '../interfaces';
-import { FileSystemDAO } from './fileSystemDAO';
-import { FireBaseDAO } from './firebaseDAO';
-import { MemoryDAO } from './memoryDAO';
-import { MongoDAO } from './mongoDAO';
-import { MysqlDAO } from './mysqlDAO';
-import { Sqlite3DAO } from './sqlite3DAO';
+import { FileSystemDAO } from './product.FileSystem.DAO';
+import { FireBaseDAO } from './product.FireBase.DAO';
+import { MemoryDAO } from './product.in.MemoryDAO';
+import { MongoDAO } from './product.Mongo.DAO';
+import { MysqlDAO } from './product.MySQL.DAO';
+import { Sqlite3DAO } from './product.SQLite3.DAO';
 
 export class ProductFactoryDAO {
 	static get(type: PersistenceType) {

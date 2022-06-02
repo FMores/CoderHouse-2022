@@ -1,5 +1,5 @@
 import { CartMethodsDAO, PersistenceType } from '../interfaces';
-import { sqlConnection } from '../../services/sqlService';
+import { sqlConnection } from '../../services/SQL.Service';
 
 export class Sqlite3CartDAO implements CartMethodsDAO<any> {
 	private db: any;

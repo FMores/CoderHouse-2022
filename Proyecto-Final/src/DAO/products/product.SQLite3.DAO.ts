@@ -1,5 +1,5 @@
 import { CommonMethodsDAO, NewProductI, PersistenceType, ProductI } from '../interfaces';
-import { sqlConnection } from '../../services/sqlService';
+import { sqlConnection } from '../../services/SQL.Service';
 
 export class Sqlite3DAO implements CommonMethodsDAO {
 	private db: any;

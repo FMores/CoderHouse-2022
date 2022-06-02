@@ -1,5 +1,5 @@
+import { ProductFactoryDAO } from '../DAO/products/product.Factory';
 import { CommonMethodsDAO, NewProductI, PersistenceType, ProductI } from '../DAO/interfaces';
-import { ProductFactoryDAO } from '../DAO/products/productFactory';
 
 class ProductAPI {
 	private product: CommonMethodsDAO | undefined;

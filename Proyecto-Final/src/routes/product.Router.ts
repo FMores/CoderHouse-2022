@@ -1,5 +1,5 @@
 import { post_schema, put_schema } from '../models/joi_schemas';
-import { productController } from '../controllers/productController';
+import { productController } from '../controllers/product.Controller';
 import { validator } from '../middleware/joi_validation';
 import isAdmin from '../middleware/isAuth';
 import { Router } from 'express';

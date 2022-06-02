@@ -1,5 +1,5 @@
 import { CartMethodsDAO, PersistenceType } from '../interfaces';
-import { sqlConnection } from '../../services/sqlService';
+import { sqlConnection } from '../../services/SQL.Service';
 
 export class MysqlCartDAO implements CartMethodsDAO<any> {
 	private db: any;

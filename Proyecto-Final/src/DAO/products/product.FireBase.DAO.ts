@@ -1,4 +1,4 @@
-import { fireBaseConnection } from '../../services/fireBaseService';
+import { fireBaseConnection } from '../../services/FireBase.Service';
 import { NewProductI, ProductI } from '../interfaces';
 
 export class FireBaseDAO {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import isAdmin from '../middleware/isAuth';
-import { cartController } from '../controllers/cartController';
+import { cartController } from '../controllers/cart.Controller';
 import { validator } from '../middleware/joi_validation';
 import { post_schema } from '../models/joi_schemas';
 

@@ -1,6 +1,6 @@
 import { errorHandler, notFound } from '../middleware/errorHandler';
 import { create } from 'express-handlebars';
-import indexRouter from '../routes/indexRouter';
+import indexRouter from '../routes/index.Router';
 import compression from 'compression';
 import { Server } from 'http';
 import express from 'express';

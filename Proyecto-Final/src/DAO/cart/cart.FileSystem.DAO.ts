@@ -7,7 +7,8 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 	private filePath: string;
 
 	// Harcoded userId = '628c290ebeed9a7b4df6b722';
-	constructor(fileLocation) {
+
+	constructor(fileLocation: any) {
 		this.filePath = fileLocation;
 	}
 
@@ -51,7 +52,7 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 			const cartData = await this.readFile();
 
 			if (cartData.length === 0) {
-				return [];
+				return 'Not Found';
 			}
 
 			return cartData;
@@ -67,7 +68,7 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 			return cartByUserId;
 		}
 
-		return [];
+		return 'Invalid user id';
 	}
 
 	public async add(id: string, id_prod: string, newProductData?: NewProductI): Promise<any> {
@@ -151,7 +152,7 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 		const existId = await this.checkId(id);
 
 		if (!existId) {
-			return [];
+			return 'Not Found user id';
 		}
 
 		const cartList = await this.readFile();
@@ -161,7 +162,7 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 		const productIndex = cartList[userIndex].items.findIndex((el: any) => el._id === id_prod);
 
 		if (!cartList[userIndex].items[productIndex] || cartList[userIndex].items === 0) {
-			return [];
+			return 'Not Found product id';
 		}
 
 		if (cartList[userIndex].items[productIndex].quantity > 0) {
@@ -184,6 +185,6 @@ export class CartFileSystemDAO implements CartMethodsDAO<any> {
 			return;
 		}
 
-		return [];
+		return '3';
 	}
 }

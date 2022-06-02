@@ -5,11 +5,13 @@ import { code_creator } from '../../utils/uuid';
 export class MemoryCartDAO implements CartMethodsDAO<any> {
 	private cart: any[] = [];
 
+	// Harcoded userId = '628c290ebeed9a7b4df6b722';
+
 	constructor() {
 		const mockData = {
 			state: true,
 			_id: 'f6112378-3952-456d-8836-8a468f569310',
-			userId: '628c290ebeed9a7b4df6b723',
+			userId: '628c290ebeed9a7b4df6b722',
 			timestamp: '29-05-22 08:13:09 pm',
 			items: [],
 			quantity: 0,
@@ -31,7 +33,7 @@ export class MemoryCartDAO implements CartMethodsDAO<any> {
 	public async get(id?: string): Promise<any> {
 		if (!id) {
 			if (this.cart.length === 0) {
-				return [];
+				return '1';
 			}
 
 			return this.cart;
@@ -45,7 +47,7 @@ export class MemoryCartDAO implements CartMethodsDAO<any> {
 			return cartByUserId;
 		}
 
-		return [];
+		return 'Not Found';
 	}
 
 	public async add(id: string, id_prod: string, newProductData: NewProductI): Promise<any> {
@@ -117,7 +119,7 @@ export class MemoryCartDAO implements CartMethodsDAO<any> {
 		const existId = await this.checkId(id);
 
 		if (!existId) {
-			return [];
+			return 'Not Found or Invalid user id';
 		}
 
 		const userIndex = this.cart.findIndex((el: any) => el.userId === id);
@@ -125,7 +127,7 @@ export class MemoryCartDAO implements CartMethodsDAO<any> {
 		const productIndex = this.cart[userIndex].items.findIndex((el: any) => el._id === id_prod);
 
 		if (!this.cart[userIndex].items[productIndex] || this.cart[userIndex].items === 0) {
-			return [];
+			return 'Not Found or Invalid product id';
 		}
 
 		if (this.cart[userIndex].items[productIndex].quantity > 0) {
@@ -146,6 +148,6 @@ export class MemoryCartDAO implements CartMethodsDAO<any> {
 			return;
 		}
 
-		return [];
+		return '3';
 	}
 }

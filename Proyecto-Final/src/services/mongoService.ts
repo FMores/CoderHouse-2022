@@ -11,6 +11,7 @@ export const mongoConnection = async (type: PersistenceType) => {
 		} else {
 			const mongoAtlas = await mongoose.connect(config.MONGO_ATLAS_URI);
 			console.log('Successful connection to mongo atlas database');
+
 			return mongoAtlas;
 		}
 	} catch (err: any) {

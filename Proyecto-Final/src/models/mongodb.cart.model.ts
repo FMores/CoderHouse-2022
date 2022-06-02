@@ -21,7 +21,9 @@ const CartModel = new Schema<CartI>(
 				},
 				quantity: {
 					type: Number,
+					min: 0,
 					require: true,
+					default: 0,
 				},
 			},
 		],
@@ -29,6 +31,7 @@ const CartModel = new Schema<CartI>(
 			type: Number,
 			required: true,
 			default: 0,
+			min: 0,
 		},
 		subTotal: {
 			default: 0,

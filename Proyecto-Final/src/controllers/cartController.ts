@@ -14,8 +14,8 @@ class CartController {
 		const { id } = req.params;
 		const result = await cartAPI.get(id);
 
-		if (result.length === 0) {
-			res.status(404).send({ status: 'Not Found' });
+		if (typeof result === 'string') {
+			res.status(404).send({ status: result });
 			return;
 		}
 
@@ -26,10 +26,10 @@ class CartController {
 	public add = async (req: Request, res: Response, next: NextFunction) => {
 		const { id, id_prod } = req.params;
 
-		const result = await cartAPI.add(id, id_prod);
+		const result = await cartAPI.add(id, id_prod, req.body);
 
-		if (result.length === 0) {
-			res.status(404).send({ status: 'Not Found' });
+		if (typeof result === 'string') {
+			res.status(404).send({ status: result });
 			return;
 		}
 
@@ -42,12 +42,12 @@ class CartController {
 
 		const result = await cartAPI.delete(id, id_prod);
 
-		if (result && result.length === 0) {
-			res.status(404).send({ status: 'Not Found' });
+		if (typeof result === 'string') {
+			res.status(404).send({ status: result });
 			return;
 		}
 
-		res.status(200).send({ Status: 'Delete product by productId and userId' });
+		res.status(200).send({ Status: 'Delete product successfully' });
 	};
 }
 

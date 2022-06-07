@@ -1,6 +1,8 @@
 import { CartMethodsDAO, PersistenceType } from '../interfaces';
 import { sqlConnection } from '../../services/SQL.Service';
 
+// NO ESTA TERMINADO!!
+
 export class Sqlite3CartDAO implements CartMethodsDAO<any> {
 	private db: any;
 	persistence: PersistenceType;
@@ -9,23 +11,23 @@ export class Sqlite3CartDAO implements CartMethodsDAO<any> {
 	constructor(persistence: PersistenceType) {
 		this.persistence = persistence;
 		this.connection();
-		this.tableName = 'products';
+		this.tableName = 'carts';
 	}
 
 	private async connection(): Promise<void> {
 		try {
 			this.db = await sqlConnection(this.persistence);
 
-			const existTable = await this.db.schema.hasTable('products');
+			const existTable = await this.db.schema.hasTable('carts');
 			if (!existTable) {
-				await this.db.schema.createTable('products', (prodTable: any) => {
-					prodTable.increments('_id');
-					prodTable.string('name').notNullable();
-					prodTable.string('description').notNullable();
-					prodTable.decimal('price', 12, 3).notNullable();
-					prodTable.integer('stock').notNullable();
-					prodTable.string('thumbnail').notNullable();
-					prodTable.timestamp('timestamp').defaultTo(this.db.fn.now());
+				await this.db.schema.createTable('carts', (cartTable: any) => {
+					cartTable.increments('cart_id').primary();
+					cartTable.Boolean('status').notNullable();
+					cartTable.string('userId').notNullable().require;
+					cartTable.string('items').notNullable();
+					cartTable.Number('quantity').notNullable();
+					cartTable.number('subTotal').notNullable();
+					cartTable.timestamp('timestamp').defaultTo(this.db.fn.now());
 				});
 			}
 		} catch (err: any) {

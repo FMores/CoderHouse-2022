@@ -20,7 +20,7 @@ export class MysqlDAO implements CommonMethodsDAO {
 
 			if (!existTable) {
 				await this.db.schema.createTable('products', (prodTable: any) => {
-					prodTable.increments('_id');
+					prodTable.increments('_id').primary();
 					prodTable.string('name').notNullable();
 					prodTable.string('description').notNullable();
 					prodTable.decimal('price', 12, 3).notNullable();

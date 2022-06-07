@@ -5,7 +5,7 @@ class CartAPI {
 	private cart: CartMethodsDAO<any>;
 
 	constructor() {
-		this.cart = CartFactoryDAO.get(PersistenceType.Memory);
+		this.cart = CartFactoryDAO.get(PersistenceType.MySQL);
 	}
 
 	public async get(id?: string): Promise<any> {

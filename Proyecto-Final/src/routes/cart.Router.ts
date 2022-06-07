@@ -2,7 +2,7 @@ import { Router } from 'express';
 import isAdmin from '../middleware/isAuth';
 import { cartController } from '../controllers/cart.Controller';
 import { validator } from '../middleware/joi_validation';
-import { post_schema } from '../models/joi_schemas';
+import { MySQL_post_schema, post_schema } from '../models/joi_schemas';
 
 const router = Router();
 
@@ -15,7 +15,10 @@ router.get('/', isAdmin, cartController.getAll);
 router.get('/:id', cartController.get);
 
 // POST: '/:id/cart' - Para incorporar productos al carrito utilizando el id del usuario y el id de producto por params
-router.post('/:id/product/:id_prod', validator(post_schema), cartController.add);
+//router.post('/:id/product/:id_prod', validator(post_schema), cartController.add);
+
+//Para utilizar con SQL
+router.post('/:id/product/:id_prod', validator(MySQL_post_schema), cartController.add);
 
 // DELETE: '/:id/cart/:id_prod' - Eliminar un producto del carrito utilizando el id del usuario y el id de producto por params
 router.delete('/:id/product/:id_prod', cartController.delete);

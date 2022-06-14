@@ -1,0 +1,38 @@
+[
+	{
+		"author": {
+			"_id": "moresfabricio0@gmail.com",
+			"name": "Fabricio",
+			"surname": "Mores",
+			"age": "31",
+			"alias": "Taquito",
+			"avatar": "avatar"
+		},
+		"text": "mensaje de fabricio",
+		"timestamp": "12-06-22 10:06:00 pm"
+	},
+	{
+		"author": {
+			"_id": "fabry_182_@hotmail.com",
+			"name": "Fabri",
+			"surname": "Mores",
+			"age": "32",
+			"alias": "asdf",
+			"avatar": "asf"
+		},
+		"text": "mensaje 2",
+		"timestamp": "12-06-22 10:10:28 pm"
+	},
+	{
+		"author": {
+			"_id": "fabry_182_@hotmail.com",
+			"name": "Fabri",
+			"surname": "Mores",
+			"age": "32",
+			"alias": "asdf",
+			"avatar": "asf"
+		},
+		"text": "mensaje 2",
+		"timestamp": "12-06-22 10:13:19 pm"
+	}
+]

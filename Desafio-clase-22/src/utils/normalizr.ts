@@ -1,56 +1,75 @@
 import { normalize, schema } from 'normalizr';
+import util from 'util';
 
 class Normalizr {
-	private msg = [
-		{
-			author: {
-				id: '1@mail.com',
-				nombre: 'nombre del usuario',
-				apellido: 'apellido del usuario',
-				edad: 'edad del usuario',
-				alias: 'alias del usuario',
-				avatar: 'url avatar (foto, logo) del usuario',
+	private data = {
+		id: 154,
+		chats: [
+			{
+				id: 1,
+				author: {
+					id: '1@mail.com',
+					nombre: 'nombre del usuario',
+					apellido: 'apellido del usuario',
+					edad: 'edad del usuario',
+					alias: 'alias del usuario',
+					avatar: 'url avatar (foto, logo) del usuario',
+				},
+				comment: 'mensaje del usuario 1',
 			},
-			text: 'mensaje del usuario 1',
-		},
-		{
-			author: {
-				id: '2@mail.com',
-				nombre: 'nombre del usuario',
-				apellido: 'apellido del usuario',
-				edad: 'edad del usuario',
-				alias: 'alias del usuario',
-				avatar: 'url avatar (foto, logo) del usuario',
+			{
+				id: 1,
+				author: {
+					id: '1@mail.com',
+					nombre: 'nombre del usuario',
+					apellido: 'apellido del usuario',
+					edad: 'edad del usuario',
+					alias: 'alias del usuario',
+					avatar: 'url avatar (foto, logo) del usuario',
+				},
+				comment: 'mensaje 2',
 			},
-			text: 'mensaje del usuario 2',
-		},
-		{
-			author: {
-				id: '3@mail.com',
-				nombre: 'nombre del usuario',
-				apellido: 'apellido del usuario',
-				edad: 'edad del usuario',
-				alias: 'alias del usuario',
-				avatar: 'url avatar (foto, logo) del usuario',
+			{
+				id: 2,
+				author: {
+					id: '2@mail.com',
+					nombre: 'nombre del usuario',
+					apellido: 'apellido del usuario',
+					edad: 'edad del usuario',
+					alias: 'alias del usuario',
+					avatar: 'url avatar (foto, logo) del usuario',
+				},
+				comment: 'mensaje del usuario 2',
 			},
-			text: 'mensaje del usuario 3',
-		},
-	];
+			{
+				id: 3,
+				author: {
+					id: '3@mail.com',
+					nombre: 'nombre del usuario',
+					apellido: 'apellido del usuario',
+					edad: 'edad del usuario',
+					alias: 'alias del usuario',
+					avatar: 'url avatar (foto, logo) del usuario',
+				},
+				comment: 'mensaje del usuario 3',
+			},
+		],
+	};
 
-	schemaAuthor = new schema.Entity('author', {}, { idAttribute: 'email' });
-	text = new schema.Entity('text', { author: this.schemaAuthor }, { idAttribute: 'id' });
+	private schemaUser = new schema.Entity('user', {}, { idAttribute: 'id' });
 
-	msgSchemaEntity = new schema.Entity(
-		'messages',
-		{
-			texto: [this.text],
-		},
-		{ idAttribute: '_id' },
-	);
+	private schemaAuthor = new schema.Entity('comment', {
+		commenst: this.schemaUser,
+	});
+
+	msgSchema = new schema.Entity('messages', {
+		author: [this.schemaUser],
+		comments: [this.schemaAuthor],
+	});
 
 	public async nmzr(messages: Array<{}>) {
-		let msgNormalized = normalize(this.msg, this.msgSchemaEntity);
-
+		let msgNormalized = normalize(this.data, this.msgSchema);
+		console.log(util.inspect(msgNormalized, true, 7, true));
 		return msgNormalized;
 	}
 }

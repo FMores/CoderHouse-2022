@@ -23,8 +23,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, '../../views'));
 
 // Haciendo disponible la carpeta public
-const publicFolderPath = path.resolve(__dirname, '../../public');
-app.use(express.static(publicFolderPath));
+app.use(express.static(path.resolve(__dirname, '../../public')));
 
 //Permite que express pueda manejar los datos de post y put.
 app.use(express.json());

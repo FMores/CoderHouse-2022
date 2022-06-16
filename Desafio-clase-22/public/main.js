@@ -6,28 +6,31 @@ const renderMsg = (currentMsg) => {
 	let newTextArea = currentMsg
 		.map((el) => {
 			return `<div >
-            <div class="el-author">${el.author._id}</div>
+            <div class="el-author">${el.author.id}</div>
             <div class="el-timestamp">[${el.timestamp}]:</div>
-            <p class="el-text">${el.text}</p>
+            <p class="el-text">${el.text} <img width="20" height="20" src=${el.author.avatar}></p>
             </div>`;
 		})
 		.join('');
 
 	if (document.getElementById('textarea')) {
-		document.getElementById('textarea').scrollTop = document.getElementById('textarea').scrollHeight;
 		document.getElementById('textarea').innerHTML = newTextArea;
+		document.getElementById('textarea').scrollTop = document.getElementById('textarea').scrollHeight;
 	}
 	return;
 };
 
 const sendMessage = () => {
+	var select = document.getElementById('language');
+	var avatar = select.options[select.selectedIndex].value;
+
 	const new_msg = {
 		email: document.getElementById('email').value,
 		name: document.getElementById('name').value,
 		surname: document.getElementById('surname').value,
 		age: document.getElementById('age').value,
 		alias: document.getElementById('alias').value,
-		avatar: document.getElementById('avatar').value,
+		avatar: avatar,
 		text: document.getElementById('msg').value,
 	};
 
@@ -35,10 +38,10 @@ const sendMessage = () => {
 		if (new_msg[value] === '') {
 			alert(`Debes completar todos los campos para poder enviar el mensaje`);
 			return;
-		} else {
-			socket.emit('new-msg', new_msg);
 		}
 	}
+
+	socket.emit('new-msg', new_msg);
 
 	return;
 };
@@ -73,9 +76,13 @@ const render_products = (current_products) => {
 
 const send_new_product = () => {
 	const title = document.getElementById('title').value;
+
 	const price = Number(document.getElementById('price').value);
+
 	const thumbnail = document.getElementById('thumbnail').value;
+
 	const new_product = { title, price, thumbnail };
+
 	socket.emit('new_product', new_product);
 };
 

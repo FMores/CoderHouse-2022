@@ -9,9 +9,7 @@ interface IProduct {
 }
 
 class MySQL_service {
-	constructor(private enviroment = process.env.MySQL_ENV || 'development', private DB = knex(DB_config[enviroment])) {
-		console.log(`DB MySQL setting as ${this.enviroment}`);
-	}
+	constructor(private enviroment = process.env.MySQL_ENV || 'development', private DB = knex(DB_config[enviroment])) {}
 
 	public init = async (): Promise<void> => {
 		try {

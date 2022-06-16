@@ -1,4 +1,5 @@
 import { IMessage } from 'src/DAO/interfaces';
+import { normalizr_function } from '../utils/normalizr';
 import { msg_api } from '../api/msg.api';
 
 class MsgController {
@@ -6,8 +7,8 @@ class MsgController {
 		return await msg_api.get();
 	}
 
-	public async save(new_msg: IMessage): Promise<void> {
-		await msg_api.save(new_msg);
+	public async add(new_msg: IMessage): Promise<void> {
+		await msg_api.add(new_msg);
 	}
 }
 

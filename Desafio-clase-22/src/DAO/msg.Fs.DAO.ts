@@ -33,18 +33,22 @@ export class MsgFileSystemDAO {
 	}
 
 	public async get() {
-		await this.fileStat();
+		try {
+			await this.fileStat();
 
-		const msg_array = await this.readFile();
+			const msg_array = await this.readFile();
 
-		const msg_normalized = normalizr_function.nmzr(msg_array);
+			//const msg_normalized = normalizr_function.nmzr(msg_array);
 
-		console.log(util.inspect(msg_normalized, true, 7, true));
+			//console.log(util.inspect(msg_normalized, true, 7, true));
 
-		return msg_array;
+			return msg_array;
+		} catch (err: any) {
+			console.log('Error:', err.message);
+		}
 	}
 
-	public async save(new_msg: IMessage) {
+	public async add(new_msg: IMessage) {
 		const stats = await this.fileStat();
 		const date = await date_creator();
 

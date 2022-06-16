@@ -1,5 +1,5 @@
+import { mysql_service } from '../services/MySQL.Service';
 import { ProductsApi } from '../api/product.api';
-import { mysql_service } from '../services/Mysql';
 
 interface IProduct {
 	id?: number;

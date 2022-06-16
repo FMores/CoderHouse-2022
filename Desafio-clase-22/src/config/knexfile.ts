@@ -23,11 +23,6 @@ const DB_config: { [key: string]: Knex.Config } = {
 			directory: __dirname + '../db/seeds',
 		},
 	},
-	localStorage: {
-		client: 'sqlite3',
-		connection: { filename: path.resolve('src/db/ecommerce.sqlite') },
-		useNullAsDefault: true,
-	},
 };
 
 export default DB_config;

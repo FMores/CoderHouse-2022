@@ -23,7 +23,7 @@ class IoService {
 				// Chat-Room
 				socket.emit('mensajes', await msgController.get());
 				socket.on('new-msg', async (data) => {
-					await msgController.save(data);
+					await msgController.add(data);
 					this.ioServer?.emit('mensajes', await msgController.get());
 				});
 

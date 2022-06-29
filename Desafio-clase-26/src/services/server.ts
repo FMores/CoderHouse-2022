@@ -1,27 +1,15 @@
 import { errorHandler, notFound } from '../middleware/errorHandler';
 import { create } from 'express-handlebars';
 import indexRouter from '../routes/index';
+import passport from '../middleware/auth';
 import cookieParser from 'cookie-parser';
-import MongoStore from 'connect-mongo';
 import session from 'express-session';
-import flash from 'express-flash';
 import config from '../config';
 import { Server } from 'http';
 import express from 'express';
 import path from 'path';
 
 export const app = express();
-
-// Configuracion para guardar las id de las sesiones en mongo o mongo atlas.
-const storeOptions = {
-	store: MongoStore.create({ mongoUrl: config.MONGO_ATLAS_URI, ttl: 20 }),
-	secret: 'supersecret',
-	resave: true,
-	saveUninitialized: true,
-	cookie: {
-		maxAge: 20000,
-	},
-};
 
 //Configuracion de Handlebars
 export const hbs = create({
@@ -42,9 +30,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Permite que express utilice cookie-parse y session.
-app.use(cookieParser('mysupersecret'));
-app.use(session(storeOptions));
-app.use(flash());
+app.use(cookieParser(config.COOKIE_PARSER_SECRET));
+app.use(
+	session({
+		secret: config.EXPRESS_SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			maxAge: 20000,
+		},
+	}),
+);
+
+//Iniciamos passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Configurando rutas
 app.use('/api', indexRouter);

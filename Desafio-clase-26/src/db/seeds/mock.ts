@@ -18,6 +18,7 @@ export const seed = async (knex: Knex): Promise<void> => {
 		await knex('products').del();
 		await knex('products').insert(init_products);
 	} catch (err: any) {
+		console.log('Error en seeds mock.ts');
 		throw Error(err);
 	}
 };

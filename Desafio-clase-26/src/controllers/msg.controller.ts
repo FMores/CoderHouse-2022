@@ -1,5 +1,4 @@
 import { IMessage } from 'src/DAO/interfaces';
-import { normalizr_function } from '../utils/normalizr';
 import { msg_api } from '../api/msg.api';
 
 class MsgController {

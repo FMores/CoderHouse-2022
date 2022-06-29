@@ -25,7 +25,7 @@ class MySQL_service {
 				});
 			}
 		} catch (err: any) {
-			console.log('Algo salio mal:', err.message);
+			console.log('Algo salio mal con MySQL:', err.message);
 		}
 	};
 

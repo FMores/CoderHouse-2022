@@ -1,6 +1,6 @@
-import Config from '../config';
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import Config from '../config';
 
 export const fireBaseConnection = () => {
 	initializeApp({

@@ -1,4 +1,8 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import { validator } from '../middleware/validator.joi';
+import signUp_logIn_Schema from '../models/joi.schemas';
+import { isLoggedIn } from '../middleware/auth';
+import passport from 'passport';
 
 // De esta forma le digo a typescript que dentro de req.session van a existir los campos uname y upwd
 declare module 'express-session' {
@@ -10,39 +14,60 @@ declare module 'express-session' {
 
 const router = Router();
 
-let uName: string = 'admin';
-let uPwd: string = 'admin';
-
-router.get('/', (req: Request, res: Response) => {
+/*------------------------------------------------ */
+/*-------------------- LOG IN -------------------- */
+/*------------------------------------------------ */
+router.get('/login', (req: Request, res: Response) => {
 	res.render('logIn');
 });
 
-router.post('/login', (req: Request, res: Response) => {
-	const { uname, upwd } = req.body;
+router.post(
+	'/login',
+	validator(signUp_logIn_Schema),
+	passport.authenticate('login', {
+		successRedirect: '/api/productos',
+		failWithError: true,
+	}),
+	(err: any, req: Request, res: Response, next: NextFunction) => {
+		res.render('invalidCredentials');
+	},
+);
 
-	if (uname === uName && upwd == uPwd) {
-		if (req.session) {
-			req.session.auth = true;
-			req.session.uname = uname;
-		}
-
-		res.redirect('/api/productos');
-	} else {
-		res.redirect('/api/auth');
-	}
+/*------------------------------------------------- */
+/*-------------------- SIGN UP -------------------- */
+/*------------------------------------------------- */
+router.get('/signup', (req: Request, res: Response) => {
+	res.render('signup');
 });
 
-router.get('/logout', (req: Request, res: Response) => {
+router.post('/signup', validator(signUp_logIn_Schema), (req: Request, res: Response, next: NextFunction) => {
+	passport.authenticate('signup', function (err, user, info) {
+		if (err) {
+			return next(err);
+		}
+
+		if (!user) return res.render('userExist');
+
+		res.redirect('/api/productos');
+	})(req, res, next);
+});
+
+/*------------------------------------------------ */
+/*-------------------- LOGOUT -------------------- */
+/*------------------------------------------------ */
+router.get('/logout', isLoggedIn, (req: Request, res: Response) => {
+	let uEmail: string;
+
+	if (req.user) {
+		uEmail = req.user.email;
+	}
+
 	req.session.destroy((e) => {
 		if (e) {
 			throw new Error(e.message);
 		}
-		return res.redirect('/api/auth/saygoodbye');
+		return res.render('logout', { uEmail });
 	});
-});
-
-router.get('/saygoodbye', (req: Request, res: Response) => {
-	res.render('logout', { uName });
 });
 
 export default router;

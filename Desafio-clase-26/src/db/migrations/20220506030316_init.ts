@@ -13,6 +13,7 @@ export const up = async (knex: Knex): Promise<void> => {
 			prod_table.timestamp('createdAt').defaultTo(knex.fn.now());
 		});
 	} catch (err: any) {
+		console.log('Error en migrations up');
 		throw Error(err.message);
 	}
 };

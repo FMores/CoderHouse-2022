@@ -1,7 +1,7 @@
+import { productController } from '../controllers/product.controller';
+import { msgController } from '../controllers/msg.controller';
 import io, { Server as ioServer } from 'socket.io';
 import { Server as httpServer } from 'http';
-import { msgController } from '../controllers/msg.controller';
-import { productController } from '../controllers/product.controller';
 
 //Datos utiles
 

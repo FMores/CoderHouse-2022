@@ -122,19 +122,12 @@ socket.on('fake-product-list', (fakeProducts) => {
 
 //*------ PARA EL MANEJO DE LOGIN ------*//
 
-window.onclick = function (event) {
-	let modal = document.getElementById('id01');
-	if (event.target == modal) {
-		modal.style.display = 'none';
-	}
-};
-
 const logout_function = () => {
 	window.location.href = 'http://localhost:8080/api/auth/logout';
 };
 
-const goodbye_timer = () => {
+const error_timer = () => {
 	setTimeout(() => {
-		window.location.href = 'http://localhost:8080/api/auth';
+		window.location.href = 'http://localhost:8080/api/auth/login';
 	}, 3000);
 };

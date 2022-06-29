@@ -1,20 +1,20 @@
 import { Router, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import isAuth from '../middleware/isAuth';
+import { isLoggedIn } from '../middleware/auth';
 
 const router = Router();
 
-//Ruta para agregar un producto nuevo mediante un formulario
+/* Ruta para agregar un producto nuevo mediante un formulario */
 router.get(
 	'/',
-	isAuth,
+	isLoggedIn,
 	asyncHandler((req: Request, res: Response) => {
-		const { uname } = req.session;
-		res.render('index', { uname: uname });
+		const uEmail = req.user?.email;
+		res.render('index', { uEmail });
 	}),
 );
 
-//Ruta para agregar un producto nuevo mediante un formulario
+/* Ruta para agregar un producto nuevo mediante un formulario */
 router.get(
 	'/test',
 	asyncHandler((req: Request, res: Response) => {

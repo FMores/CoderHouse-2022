@@ -217,7 +217,7 @@ span.psw {
 
 /* The Modal (background) */
 .modal {
-	display: none;
+	display: block;
 	/* Hidden by default */
 	position: fixed;
 	/* Stay in place */
@@ -313,4 +313,31 @@ span.psw {
 .img-bye {
 	display: block;
 	margin: 0px auto;
+}
+
+.user-error {
+	background-color: orange;
+	width: 60%;
+	height: 20%;
+	transform: translateX(30%);
+}
+
+.uExist-msg {
+	display: flex;
+	justify-content: center;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
+.btn-uExist {
+	width: auto !important;
+	height: 50px !important;
+	margin: 2px !important;
+}
+
+.uExist {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: orange;
 }

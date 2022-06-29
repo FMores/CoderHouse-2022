@@ -1,6 +1,6 @@
 import { PersistenceType } from '../DAO/interfaces';
-import mongoose from 'mongoose';
 import config from '../config/index';
+import mongoose from 'mongoose';
 
 export const mongoConnection = async (type: PersistenceType) => {
 	try {

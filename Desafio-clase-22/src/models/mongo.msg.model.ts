@@ -1,9 +1,10 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 
 const messageSchema = new Schema(
 	{
+		_id: { type: Number },
 		author: {
-			id: {
+			email: {
 				type: String,
 				required: true,
 				match: /.+\@.+\..+/,
@@ -21,6 +22,7 @@ const messageSchema = new Schema(
 	{
 		timestamps: false,
 		versionKey: false,
+		_id: false,
 	},
 );
 

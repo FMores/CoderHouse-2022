@@ -26,7 +26,7 @@ export class FireBaseMsgDAO {
 
 		const msgToSave = {
 			author: {
-				id: msg_data.email,
+				email: msg_data.email,
 				name: msg_data.name,
 				surname: msg_data.surname,
 				age: msg_data.age,

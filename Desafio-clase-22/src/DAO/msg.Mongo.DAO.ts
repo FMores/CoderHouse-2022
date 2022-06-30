@@ -21,10 +21,12 @@ export class MsgMongoDAO {
 
 	public async add(msg_data: IMessage) {
 		const date = await date_creator();
+		const currentData = await this.get();
 
 		const msgToSave = {
+			_id: currentData.length + 1,
 			author: {
-				id: msg_data.email,
+				email: msg_data.email,
 				name: msg_data.name,
 				surname: msg_data.surname,
 				age: msg_data.age,

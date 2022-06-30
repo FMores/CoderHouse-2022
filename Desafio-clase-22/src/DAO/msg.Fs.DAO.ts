@@ -1,8 +1,6 @@
-import { normalizr_function } from '../utils/normalizr';
 import { date_creator } from '../utils/date.creator';
 import { IMessage } from './interfaces';
 import fs from 'fs/promises';
-import util from 'util';
 
 export class MsgFileSystemDAO {
 	private filePath: string;
@@ -38,10 +36,6 @@ export class MsgFileSystemDAO {
 
 			const msg_array = await this.readFile();
 
-			//const msg_normalized = normalizr_function.nmzr(msg_array);
-
-			//console.log(util.inspect(msg_normalized, true, 7, true));
-
 			return msg_array;
 		} catch (err: any) {
 			console.log('Error:', err.message);
@@ -57,13 +51,14 @@ export class MsgFileSystemDAO {
 
 			const msg_to_save = {
 				author: {
-					_id: new_msg.email,
+					email: new_msg.email,
 					name: new_msg.name,
 					surname: new_msg.surname,
 					age: new_msg.age,
 					alias: new_msg.alias,
 					avatar: new_msg.avatar,
 				},
+				_id: currentMsgArray.length + 1,
 				text: new_msg.text,
 				timestamp: date,
 			};
@@ -74,13 +69,14 @@ export class MsgFileSystemDAO {
 		} else {
 			const initial_msg = {
 				author: {
-					_id: new_msg.email,
+					email: new_msg.email,
 					name: new_msg.name,
 					surname: new_msg.surname,
 					age: new_msg.age,
 					alias: new_msg.alias,
 					avatar: new_msg.avatar,
 				},
+				_id: 1,
 				text: new_msg.text,
 				timestamp: date,
 			};

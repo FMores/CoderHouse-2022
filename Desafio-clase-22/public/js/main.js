@@ -2,20 +2,29 @@ const socket = io.connect();
 
 //CODIGO PARA MANEJO DE CHAT
 
-const renderMsg = (currentMsg) => {
-	let newTextArea = currentMsg
+const schemaAuthor = new normalizr.schema.Entity('author', {}, { idAttribute: 'email' });
+
+const schemaMensaje = new normalizr.schema.Entity('post', { author: schemaAuthor }, { idAttribute: '_id' });
+
+const schemaMensajes = new normalizr.schema.Entity('posts', { mensajes: [schemaMensaje] }, { idAttribute: '_id' });
+
+const denormalizrFunc = (data) => normalizr.denormalize(data.result, schemaMensajes, data.entities);
+
+const renderMsg = (data) => {
+	let newTextArea = data.messages
 		.map((el) => {
 			return `<div >
-            <div class="el-author">${el.author.id}</div>
-            <div class="el-timestamp">[${el.timestamp}]:</div>
-            <p class="el-text">${el.text} <img width="20" height="20" src=${el.author.avatar}></p>
-            </div>`;
+	        <div class="el-author">${el.author.email}</div>
+	        <div class="el-timestamp">[${el.timestamp}]:</div>
+	        <p class="el-text">${el.text} <img width="20" height="20" src=${el.author.avatar}></p>
+	        </div>`;
 		})
 		.join('');
 
 	if (document.getElementById('textarea')) {
 		document.getElementById('textarea').innerHTML = newTextArea;
 		document.getElementById('textarea').scrollTop = document.getElementById('textarea').scrollHeight;
+		document.getElementById('ratio').innerText = `${data.ratio}% de compresion con normalizr`;
 	}
 	return;
 };
@@ -48,7 +57,14 @@ const sendMessage = () => {
 
 socket.on('mensajes', (currentMsg) => {
 	if (currentMsg) {
-		renderMsg(currentMsg);
+		const messagesDenormalized = denormalizrFunc(currentMsg);
+
+		const dataNormalized = JSON.stringify(messagesDenormalized).length;
+		const dataOriginal = JSON.stringify(currentMsg).length;
+
+		const compressionRatio = parseInt(((dataOriginal - dataNormalized) / dataOriginal) * 100);
+
+		renderMsg({ messages: messagesDenormalized.data, ratio: compressionRatio });
 	}
 });
 

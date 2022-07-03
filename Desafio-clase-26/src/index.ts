@@ -17,3 +17,5 @@ httpServer.listen(config.SERVER_PORT, () => {
 	ioService.init(httpServer);
 	mysql_service.init();
 });
+
+//asdfas

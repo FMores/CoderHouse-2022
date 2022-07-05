@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
+const { hideBin } = require('yargs/helpers');
+const yargs = require('yargs/yargs')(hideBin(process.argv)).argv;
 
 dotenv.config();
 
 const config = {
-	SERVER_PORT: process.env.SERVER_PORT || 3000,
+	SERVER_PORT: yargs.port || process.env.SERVER_PORT || 3000,
 	MONGO_LOCAL_URI: process.env.MONGO_LOCAL_URI || 'your_local_uri',
 	MONGO_ATLAS_URI: process.env.MONGO_ATLAS_URI || 'your_mongo_atlas_uri',
 	FIREBASE_ACCOUNT_CONFIG: process.env.FIREBASE_ACCOUNT_CONFIG || 'your_FIREBASE_ACCOUNT_CONFIG',

@@ -24,6 +24,6 @@
 		"skipLibCheck": true /* Skip type checking of declaration files. */,
 		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
 	},
-	"include": ["./src/**/*", "knexfile.js"],
+	"include": ["./src/**/*", "knexfile.js", "cli.ts"],
 	"exclude": [".node_modules", "**/*.spect.ts"]
 }

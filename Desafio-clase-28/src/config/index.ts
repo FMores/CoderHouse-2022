@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 const { hideBin } = require('yargs/helpers');
-const yargs = require('yargs/yargs')(hideBin(process.argv)).argv;
+export const yargs = require('yargs/yargs')(hideBin(process.argv)).argv;
 
 dotenv.config();
 

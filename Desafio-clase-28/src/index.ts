@@ -15,7 +15,7 @@ httpServer.listen(config.SERVER_PORT, () => {
 	console.log(`Server running on port:${config.SERVER_PORT}`);
 	//mongoConnection(PersistenceType.Mongo);
 	ioService.init(httpServer);
-	mysql_service.init();
+	//mysql_service.init();
 });
 
 //asdfas

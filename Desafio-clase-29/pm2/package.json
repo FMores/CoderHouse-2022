@@ -1,13 +1,13 @@
 {
 	"name": "desfios",
 	"version": "1.0.0",
-	"description": "CoderHouse",
+	"description": "coderhouse",
 	"main": "index.js",
 	"scripts": {
 		"start": "node ./dist",
 		"build": "tsc -p .",
 		"dev": "nodemon",
-		"prod": "forever start ./dist"
+		"prod": "npm run build && pm2 start ./dist --watch"
 	},
 	"keywords": [],
 	"author": "Fabricio R. Mores",

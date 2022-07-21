@@ -58,11 +58,11 @@ const render_products = (current_products) => {
 	const new_product = current_products
 		.map((el) => {
 			return `<tr>
-        <th class='th-id' scope='row'>${el._id}</th>
-        <td>${el.name}</td>
+        <th class='th-id' scope='row'>${el.id}</th>
+        <td>${el.title}</td>
         <td>${el.price}</td>
         <td>
-            <img src=${el.image} width='50' height='50' alt=${el.name} />
+            <img src=${el.thumbnail} width='50' height='50' alt=${el.name} />
         </td>
     </tr>`;
 		})

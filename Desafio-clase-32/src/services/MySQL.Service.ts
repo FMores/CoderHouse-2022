@@ -1,5 +1,6 @@
 import DB_config from '../config/knexfile';
 import knex from 'knex';
+import { logger } from '../utils/winston.logger';
 
 interface IProduct {
 	id?: number;
@@ -25,7 +26,7 @@ class MySQL_service {
 				});
 			}
 		} catch (err: any) {
-			console.log('Algo salio mal con MySQL:', err.message);
+			logger.error(`class MySQL init error= ${err.message}`);
 		}
 	};
 

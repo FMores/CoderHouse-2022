@@ -1,14 +1,15 @@
 import { Router, Request, Response } from 'express';
-import path from 'path';
-import { random } from '../utils/child.num.random';
+import { random } from '../utils/num.random';
 import config, { yargs } from '../config';
-import os from 'os';
+import { cpus } from 'os';
 
-const numCPUs = os.cpus().length;
+const numCPUs = cpus().length;
 
 const router = Router();
 
 router.get('/info', (req: Request, res: Response) => {
+	//console.log('resolviendo ruta /info con  console.log');
+
 	res.status(200).send({
 		Project_folder: process.cwd(),
 		Execution_path: process.execPath,
@@ -24,7 +25,9 @@ router.get('/info', (req: Request, res: Response) => {
 
 router.get('/random', (req: Request, res: Response) => {
 	const { qty } = req.query;
+
 	const numRandom = random(Number(qty));
+
 	res.status(200).send({
 		Server_port: config.SERVER_PORT,
 		Process_ID: process.pid,

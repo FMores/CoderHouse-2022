@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { logger } from '../utils/winston.logger';
 
 export const validator = (schema: { validateAsync: (arg0: any) => any }) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
@@ -9,9 +10,10 @@ export const validator = (schema: { validateAsync: (arg0: any) => any }) => {
 				next();
 			} else {
 				const { details } = error;
-				throw Error(details);
+				logger.error(details);
 			}
 		} catch (error: any) {
+			logger.error(`Validator middleware catch this error= ${error}`);
 			res.render('joiError');
 		}
 	};

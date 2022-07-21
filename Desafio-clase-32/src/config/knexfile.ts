@@ -22,6 +22,7 @@ const DB_config: { [key: string]: Knex.Config } = {
 		seeds: {
 			directory: __dirname + '../db/seeds',
 		},
+		pool: { min: 0, max: 7, acquireTimeoutMillis: 5000 },
 	},
 };
 

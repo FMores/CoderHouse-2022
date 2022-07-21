@@ -1,7 +1,7 @@
 module.exports = {
 	apps: [
 		{
-			name: 'PM2',
+			name: 'Cluster',
 			script: './dist/index.ecosystem.js',
 			watch: true,
 			autorestart: true,
@@ -9,7 +9,7 @@ module.exports = {
 			args: '--server_port 8081',
 		},
 		{
-			name: 'FOREVER',
+			name: 'Fork',
 			script: './dist',
 			watch: true,
 			autorestart: true,

@@ -1,7 +1,8 @@
-import { productController } from '../controllers/product.controller';
+import { product_Controller } from '../controllers/product.controller';
 import { msgController } from '../controllers/msg.controller';
 import io, { Server as ioServer } from 'socket.io';
 import { Server as httpServer } from 'http';
+import { logger } from '../utils/winston.logger';
 
 //Datos utiles
 
@@ -13,9 +14,9 @@ class IoService {
 	public ioServer: ioServer | undefined;
 
 	init = (httpServer: httpServer) => {
-		console.log('Iniciando conexión socket');
+		logger.info('Iniciando conexión socket');
 		if (this.ioServer) {
-			console.log('Una conexión socket ya se encuentra establecida.');
+			logger.info('Una conexión socket ya se encuentra establecida.');
 		} else {
 			this.ioServer = new io.Server(httpServer);
 
@@ -28,14 +29,11 @@ class IoService {
 				});
 
 				// Produc List
-				socket.emit('product-list', await productController.getAll());
+				socket.emit('product-list', await product_Controller.getAll());
 				socket.on('new_product', async (data) => {
-					await productController.save(data);
-					this.ioServer?.emit('product-list', await productController.getAll());
+					await product_Controller.save(data);
+					this.ioServer?.emit('product-list', await product_Controller.getAll());
 				});
-
-				// Produc List from faker
-				socket.emit('fake-product-list', await productController.getFakeData());
 			});
 		}
 	};

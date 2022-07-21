@@ -1,3 +1,4 @@
+import { logger } from '../utils/winston.logger';
 import { IMessage, PersistenceType } from '../DAO/interfaces';
 import { MsgFactory } from '../DAO/msg.factory';
 
@@ -15,11 +16,19 @@ class MsgAPI {
 	}
 
 	public async get() {
-		return await this.msg.get();
+		try {
+			return await this.msg.get();
+		} catch (err: any) {
+			logger.error(`MsgApi => get func. error=${err.message}`);
+		}
 	}
 
 	public async add(new_msg: IMessage) {
-		await this.msg.add(new_msg);
+		try {
+			await this.msg.add(new_msg);
+		} catch (err: any) {
+			logger.error(`MsgApi => add func. error=${err.message}`);
+		}
 	}
 }
 

@@ -5,7 +5,7 @@ export const yargs = require('yargs/yargs')(hideBin(process.argv)).argv;
 dotenv.config();
 
 const config = {
-	SERVER_MODE: yargs.server_mode || false,
+	SERVER_MODE: yargs.server_mode || 'Fork',
 	SERVER_PORT: yargs.server_port || process.env.SERVER_PORT || 3000,
 	MONGO_LOCAL_URI: process.env.MONGO_LOCAL_URI || 'your_local_uri',
 	MONGO_ATLAS_URI: process.env.MONGO_ATLAS_URI || 'your_mongo_atlas_uri',

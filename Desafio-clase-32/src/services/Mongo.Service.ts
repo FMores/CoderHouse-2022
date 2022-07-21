@@ -1,20 +1,21 @@
 import { PersistenceType } from '../DAO/interfaces';
 import config from '../config/index';
 import mongoose from 'mongoose';
+import { logger } from '../utils/winston.logger';
 
 export const mongoConnection = async (type: PersistenceType) => {
 	try {
 		if (type === 'Mongo') {
 			const mongoDbLocal = await mongoose.connect(config.MONGO_LOCAL_URI);
-			console.log('Successful connection to local mongo database');
+			logger.info('Successful connection to local mongo database');
 			return mongoDbLocal;
 		} else {
 			const mongoAtlas = await mongoose.connect(config.MONGO_ATLAS_URI);
-			console.log('Successful connection to mongo atlas database');
+			logger.info('Successful connection to mongo atlas database');
 
 			return mongoAtlas;
 		}
 	} catch (err: any) {
-		throw new Error(`Cannot connect to the database because: ${err.message}`);
+		logger.error(`Cannot connect to the database because: ${err.message}`);
 	}
 };

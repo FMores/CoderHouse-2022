@@ -1,17 +1,18 @@
-import { errorHandler, notFound } from '../middleware/errorHandler';
+import { errorHandler } from '../middleware/errorHandler';
+import express, { NextFunction, Request, Response } from 'express';
+import { logger } from '../utils/winston.logger';
 import { create } from 'express-handlebars';
 import indexRouter from '../routes/index';
 import passport from '../middleware/auth';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import session from 'express-session';
 import config from '../config';
 import { Server } from 'http';
-import express from 'express';
 import path from 'path';
 
 export const app = express();
 
-//Configuracion de Handlebars
 export const hbs = create({
 	extname: 'hbs',
 	layoutsDir: path.resolve(__dirname, '../../views/layouts'),
@@ -22,14 +23,10 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, '../../views'));
 
-// Haciendo disponible la carpeta public
+//app.use(compression());
 app.use(express.static(path.resolve(__dirname, '../../public')));
-
-//Permite que express pueda manejar los datos de post y put.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-//Permite que express utilice cookie-parse y session.
 app.use(cookieParser(config.COOKIE_PARSER_SECRET));
 app.use(
 	session({
@@ -41,20 +38,16 @@ app.use(
 		},
 	}),
 );
-
-//Iniciamos passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Configurando rutas
-app.use('/api', indexRouter);
-
-app.get('/', (req, res) => {
-	res.status(200).send({ msg: 'Holaaa' });
+app.use((req: Request, res: Response, next: NextFunction) => {
+	logger.info(`Method:${req.method}, Route:${req.originalUrl}`);
+	next();
 });
 
-//Manejo de errores
-app.use(notFound);
+app.use('/api', indexRouter);
+
 app.use(errorHandler);
 
 // Creamos un servidor con http para poder utilizar socket junto a express

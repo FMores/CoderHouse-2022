@@ -1,4 +1,4 @@
-import { product_Controller } from '../controllers/product.controller';
+//import { product_Controller } from '../controllers/product.controller';
 import { msgController } from '../controllers/msg.controller';
 import io, { Server as ioServer } from 'socket.io';
 import { Server as httpServer } from 'http';
@@ -29,11 +29,11 @@ class IoService {
 				});
 
 				// Produc List
-				socket.emit('product-list', await product_Controller.getAll());
-				socket.on('new_product', async (data) => {
-					await product_Controller.save(data);
-					this.ioServer?.emit('product-list', await product_Controller.getAll());
-				});
+				// socket.emit('product-list', await product_Controller.getAll());
+				// socket.on('new_product', async (data) => {
+				// 	await product_Controller.save(data);
+				// 	this.ioServer?.emit('product-list', await product_Controller.getAll());
+				// });
 			});
 		}
 	};

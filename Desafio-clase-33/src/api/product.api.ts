@@ -1,5 +1,5 @@
 import { logger } from '../utils/winston.logger';
-//import { mysql_service } from '../services/MySQL.Service';
+import { mysql_service } from '../services/MySQL.Service';
 
 interface IProduct {
 	id?: number;

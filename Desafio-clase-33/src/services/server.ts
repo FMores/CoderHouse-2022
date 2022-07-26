@@ -10,6 +10,7 @@ import session from 'express-session';
 import config from '../config';
 import { Server } from 'http';
 import path from 'path';
+import mime from 'mime';
 
 export const app = express();
 
@@ -23,8 +24,18 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, '../../views'));
 
-//app.use(compression());
-app.use(express.static(path.resolve(__dirname, '../../public')));
+app.use(compression());
+
+const setHeadersOnStatic = (res: Response, path: string, stat: any) => {
+	const type = mime.lookup(path);
+	res.set('content-type', type);
+};
+
+const staticOptions = {
+	setHeaders: setHeadersOnStatic,
+};
+
+app.use(express.static(path.resolve(__dirname, '../../public'), staticOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(config.COOKIE_PARSER_SECRET));

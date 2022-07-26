@@ -12,7 +12,7 @@ class MsgAPI {
 	private msg: any;
 
 	constructor() {
-		this.msg = MsgFactory.get(PersistenceType.Mongo);
+		this.msg = MsgFactory.get(PersistenceType.Mongo_Atlas);
 	}
 
 	public async get() {

@@ -1,7 +1,8 @@
 import io, { Server as ioServer } from 'socket.io';
 import { Server as httpServer } from 'http';
-//import { messagesController } from '../controllers/messages';
-//import { productController } from '../controllers/products';
+import { logger } from '../utils/winston.logger';
+import { product_controller } from '../controllers/product';
+import { message_controller } from '../controllers/message';
 
 //Datos utiles
 
@@ -13,25 +14,25 @@ class IoService {
 	private ioServer: ioServer | undefined;
 
 	init = (httpServer: httpServer) => {
-		console.log('Starting socket connection');
+		logger.info('Starting socket connection');
 		if (this.ioServer) {
-			console.log('Una conexión socket ya se encuentra establecida.');
+			logger.info('Una conexión socket ya se encuentra establecida.');
 		} else {
 			this.ioServer = new io.Server(httpServer);
 
 			this.ioServer.on('connection', async (socket) => {
-				// // Chat-Room
-				// socket.emit('mensajes', await messagesController.getAll());
-				// socket.on('new-msg', async (data) => {
-				// 	await messagesController.save(data);
-				// 	this.ioServer?.emit('mensajes', await messagesController.getAll());
-				// });
-				// // Produc List
-				// socket.emit('product-list', await productController.getAll());
-				// socket.on('new_product', async (data) => {
-				// 	await productController.save(data);
-				// 	this.ioServer?.emit('product-list', await productController.getAll());
-				// });
+				// Chat-Room
+				socket.emit('mensajes', await message_controller.get());
+				socket.on('new-msg', async (data) => {
+					await message_controller.add(data);
+					this.ioServer?.emit('mensajes', await message_controller.get());
+				});
+				// Produc List
+				socket.emit('product-list', await product_controller.socketGet());
+				socket.on('new_product', async (data) => {
+					await product_controller.socketAdd(data);
+					this.ioServer?.emit('product-list', await product_controller.socketGet());
+				});
 			});
 		}
 	};

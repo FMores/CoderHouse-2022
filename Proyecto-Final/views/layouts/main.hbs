@@ -1,5 +1,5 @@
 {{! /ESTA ES LA BASE DE NUESTRA PAGINA. ES LA PLANTILLA BASE DONDE SE VAN A RENDERIZAR TODAS LAS VISTAS QUE CREEMOS/ }}
-
+<!DOCTYPE html>
 <html lang='en'>
 
 <head>
@@ -7,18 +7,72 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1.0' />
 	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
 		integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous' />
-	<link rel='stylesheet' href='http://localhost:8080/style.css' />
+	<link rel='stylesheet' href='/css/style.css' defer />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<script src='/socket.io/socket.io.js' defer></script>
+	<script type="text/javascript" src='/js/main.js' defer></script>
 	<title>Handlebars main page</title>
 </head>
 
 <body>
 	{{{body}}}
-	<script src='/socket.io/socket.io.js'></script>
-	<script type="text/javascript" src='/main.js'></script>
+
+	<script>
+		function getIp (callback) {
+			fetch('https://ipinfo.io/?callback=callback&token=26407d9e90e1f6', { headers: { 'Accept': 'application/json' } })
+				.then((resp) => resp.json())
+				.catch(() => {
+					return {
+						country: 'ar',
+					};
+				})
+				.then((resp) => callback(resp.country));
+		}
+
+
+		const phoneInputField = document.querySelector("#phone");
+
+
+		const phoneInput = window.intlTelInput(phoneInputField, {
+			initialCountry: "auto",
+			geoIpLookup: getIp,
+			utilsScript:
+				"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+		});
+
+		const info = document.querySelector(".alert-info");
+		const error = document.querySelector(".alert-error");
+		const submitButto = document.querySelector('#btn-submit');
+		const phone_number = document.querySelector('.input-phone');
+
+		function process (event) {
+			//event.preventDefault();
+
+			const phoneNumber = phoneInput.getNumber();
+
+			info.style.display = "none";
+			error.style.display = "none";
+
+			if (phoneInput.isValidNumber()) {
+				info.style.display = "";
+				info.innerHTML = `Valid phone number &#9989`;
+				submitButto.disabled = false;
+				submitButto.style = '';
+				phone_number.value = phoneNumber;
+			} else {
+				error.style.display = "";
+				error.innerHTML = `Invalid phone number &#10060`;
+
+			}
+		}
+
+	</script>
 </body>
 <footer>
-	<br />
-	<br />
+	<br /><br />
 </footer>
 
 </html>

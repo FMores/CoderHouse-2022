@@ -1,0 +1,19 @@
+<div>{{uExist}}</div>
+<div id='id01' class='modal'>
+	{{!-- <form action='/api/auth/signup' enctype="multipart/form-data" method="post">
+		<div class="form-group">
+			<input type="file" class="form-control-file" name="uploaded_file">
+			<input type="text" class="form-control" placeholder="Number of speakers" name="nspeakers">
+			<input type="submit" value="Get me the stats!" class="btn btn-default">
+		</div>
+	</form> --}}
+
+	<form action="/api/auth/signup" enctype="multipart/form-data" method="post">
+		Select a image: <input type="file" class="singleFile" id="singleFile" name="singleFile" />
+		<label for="uname" class="labelSignup"><b>Email</b></label>
+		<input type="text" class="inputSingup" placeholder="Enter Username" name="email" required />
+		<label for="psw" class="labelSignup"><b>Password</b></label>
+		<input type="password" class="inputSingup" placeholder="Enter Password" name="password" required />
+		<input type="submit" class="submitSingle" value="Upload your file" />
+	</form>
+</div>

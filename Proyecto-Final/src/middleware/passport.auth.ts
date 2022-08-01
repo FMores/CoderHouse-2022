@@ -2,6 +2,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import mongoUserModel from '../models/mongo.user.model';
 import { Request, Response } from 'express';
 import passport from 'passport';
+import { logger } from '../utils/winston.logger';
 
 declare global {
 	namespace Express {
@@ -75,6 +76,7 @@ passport.deserializeUser((userId, done) => {
 });
 
 export const isLoggedIn = (req: Request, res: Response, done: any) => {
+	logger.info(`isLoggedIn: ${req.user}`);
 	if (!req.user) return res.redirect('/api/auth/login');
 	done();
 };

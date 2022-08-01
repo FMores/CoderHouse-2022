@@ -42,20 +42,17 @@ router.get('/signup', (req: Request, res: Response) => {
 	res.render('signup');
 });
 
-// router.post('/signup', upload_single_img, multer_check_img, (req: Request, res: Response, next: NextFunction) => {
-// 	passport.authenticate('signup', function (err, user, info) {
-// 		if (err) {
-// 			return next(err);
-// 		}
-// 		if (!user) return res.render('userExist');
+router.post('/signup', upload_single_img, multer_check_img, (req: Request, res: Response, next: NextFunction) => {
+	passport.authenticate('signup', function (err, user, info) {
+		if (err) {
+			return next(err);
+		}
+		if (!user) return res.render('userExist');
 
-// 		res.redirect('/api/home');
-// 	})(req, res, next);
-// });
-
-router.post('/signup', (req: Request, res: Response) => {
-	res.send({ body: req.body, file: req.file });
+		res.redirect('/api/home');
+	})(req, res, next);
 });
+
 /*------------------------------------------------ */
 /*-------------------- LOGOUT -------------------- */
 /*------------------------------------------------ */

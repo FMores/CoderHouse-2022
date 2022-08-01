@@ -24,7 +24,7 @@ export const upload_single_img = multer({
 			return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
 		}
 	},
-}).single('singleFile');
+}).single('profile_picture');
 
 export const multer_check_img = (req: Request, res: Response, next: NextFunction) => {
 	const singleFile = req.file;

@@ -16,23 +16,23 @@ export class ProductFactoryDAO {
 				const fileLocation = path.resolve(__dirname, '../../DB/productDB.json');
 				return new FileSystemDAO(fileLocation);
 			case PersistenceType.Mongo:
-				logger.info('Starting persistence in Mongo_Local for products');
-				return new MongoDAO(PersistenceType.Mongo);
+				logger.info('Starting Mongo_Local_DB for products');
+				return new MongoDAO();
 			case PersistenceType.Mongo_Atlas:
-				logger.info('Starting persistence in Mongo_Atlas for products');
-				return new MongoDAO(PersistenceType.Mongo_Atlas);
+				logger.info('Starting Mongo_Atlas_DB for products');
+				return new MongoDAO();
 			case PersistenceType.MySQL:
-				logger.info('Starting persistence in MySQL for products');
+				logger.info('Starting MySQL_DB for products');
 				return new MysqlDAO(PersistenceType.MySQL);
 			case PersistenceType.SQLite3:
-				logger.info('Starting persistence in SQLite3 for products');
+				logger.info('Starting SQLite3_DB for products');
 				return new Sqlite3DAO(PersistenceType.SQLite3);
 			case PersistenceType.FireBase:
-				logger.info('Starting persistence in FireBase for products');
+				logger.info('Starting FireBase_DB for products');
 				return new FireBaseDAO();
 			default:
 				PersistenceType.Memory;
-				logger.info('Starting persistence in Local Memory for products');
+				logger.info('Starting Local Memory DB for products');
 				return new MemoryDAO();
 		}
 	}

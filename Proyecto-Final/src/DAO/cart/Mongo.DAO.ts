@@ -9,8 +9,7 @@ export class CartMongoDAO implements CartMethodsDAO<any> {
 	private cart: any;
 	private product: any;
 
-	constructor(persistence: PersistenceType) {
-		mongoConnection(persistence);
+	constructor() {
 		this.cart = mongodbCartModel;
 		this.product = mongodbProductModel;
 	}

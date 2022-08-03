@@ -27,9 +27,9 @@ app.set('views', path.resolve(__dirname, '../../views'));
 app.use(express.static(path.resolve(__dirname, '../../public')));
 
 //Middlewares basicos necesarios.
-app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 app.use(cookieParser(config.COOKIE_PARSER_SECRET));
 app.use(session_config);
 app.use(passport.initialize());

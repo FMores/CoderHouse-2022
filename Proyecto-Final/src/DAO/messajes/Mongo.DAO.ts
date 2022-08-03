@@ -8,11 +8,6 @@ export class MsgMongoDAO {
 
 	constructor(public persistence: PersistenceType) {
 		this.msg = mongodbMessageModel;
-		this.initMongo();
-	}
-
-	private async initMongo() {
-		await mongoConnection(this.persistence);
 	}
 
 	public async get() {

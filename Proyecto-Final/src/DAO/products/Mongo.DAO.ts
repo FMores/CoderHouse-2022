@@ -6,8 +6,7 @@ import mongodbProductModel from '../../models/mongo.prod.model';
 export class MongoDAO implements CommonMethodsDAO {
 	private product: any;
 
-	constructor(persistence: PersistenceType) {
-		mongoConnection(persistence);
+	constructor() {
 		this.product = mongodbProductModel;
 	}
 

@@ -11,7 +11,6 @@ export class FireBaseCartDAO implements CartMethodsDAO<any> {
 	private product: any;
 
 	constructor() {
-		mongoConnection(PersistenceType.Memory);
 		this.cart = mongodbCartModel;
 		this.product = mongodbProductModel;
 	}

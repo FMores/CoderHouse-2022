@@ -1,7 +1,9 @@
 import { multer_check_img, upload_single_img } from '../middleware/multer';
 import { Router, Request, Response, NextFunction } from 'express';
 import { validator } from '../middleware/joi.validator';
-import { isLoggedIn } from '../middleware/passport.auth';
+import { mail_creator } from '../utils/create.mail';
+import { logger } from '../utils/winston.logger';
+import { EmailService } from '../services/email';
 import { login } from '../models/joi.schemas';
 import passport from 'passport';
 
@@ -43,11 +45,20 @@ router.get('/signup', (req: Request, res: Response) => {
 });
 
 router.post('/signup', upload_single_img, multer_check_img, (req: Request, res: Response, next: NextFunction) => {
-	passport.authenticate('signup', function (err, user, info) {
+	passport.authenticate('signup', async function (err, user, info) {
 		if (err) {
+			logger.error(`Signup error: ${err}`);
 			return next(err);
 		}
-		if (!user) return res.render('userExist');
+
+		if (!user) {
+			logger.error(`Signup invalid user: ${info}`);
+			return res.render('userExist');
+		}
+
+		const mail = await mail_creator(req.body);
+
+		await EmailService.sendEmail(mail.destination, mail.subject, mail.content);
 
 		res.redirect('/api/home');
 	})(req, res, next);

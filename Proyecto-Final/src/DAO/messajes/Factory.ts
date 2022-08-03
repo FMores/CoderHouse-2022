@@ -9,13 +9,13 @@ export class MsgFactory {
 	static get(type?: PersistenceType) {
 		switch (type) {
 			case PersistenceType.Mongo:
-				logger.info('Starting persistence in Mongo_Local for messages');
+				logger.info('Starting Mongo_Local_DB for messages');
 				return new MsgMongoDAO(PersistenceType.Mongo);
 			case PersistenceType.Mongo_Atlas:
-				logger.info('Starting persistence in Mongo_Atlas for messages');
+				logger.info('Starting Mongo_Atlas_DB for messages');
 				return new MsgMongoDAO(PersistenceType.Mongo_Atlas);
 			case PersistenceType.FireBase:
-				logger.info('Starting persistence in FireBase for messages');
+				logger.info('Starting FireBase_DB for messages');
 				return new FireBaseMsgDAO();
 			default:
 				PersistenceType.FileSystem;

@@ -4,17 +4,19 @@ import bcrypt from 'bcrypt';
 const userSchema = new Schema({
 	full_name: { type: String, required: true },
 	adress: { type: String, required: true },
-	age: { type: Number, required: true },
-	phone_number: { type: String, required: true },
+	age: { type: Number, trim: true, required: true },
+	phone_number: { type: String, trim: true, required: true },
 	profile_picture: { type: String, rquired: true },
 	email: {
 		type: String,
 		required: true,
+		trim: true,
 		unique: true,
 		match: /.+\@.+\..+/,
 	},
 	password: {
 		type: String,
+		trim: true,
 		required: true,
 	},
 });

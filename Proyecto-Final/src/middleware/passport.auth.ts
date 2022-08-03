@@ -76,7 +76,6 @@ passport.deserializeUser((userId, done) => {
 });
 
 export const isLoggedIn = (req: Request, res: Response, done: any) => {
-	logger.info(`isLoggedIn: ${req.user}`);
 	if (!req.user) return res.redirect('/api/auth/login');
 	done();
 };

@@ -16,7 +16,7 @@ class IoService {
 	init = (httpServer: httpServer) => {
 		logger.info('Starting socket connection');
 		if (this.ioServer) {
-			logger.info('Una conexión socket ya se encuentra establecida.');
+			logger.info('A socket connection is already established.');
 		} else {
 			this.ioServer = new io.Server(httpServer);
 

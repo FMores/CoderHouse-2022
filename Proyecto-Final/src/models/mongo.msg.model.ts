@@ -5,6 +5,7 @@ const messageSchema = new Schema(
 		author: {
 			email: {
 				type: String,
+				trim: true,
 				required: true,
 				match: /.+\@.+\..+/,
 			},

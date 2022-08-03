@@ -20,6 +20,12 @@ body {
 	transform: translateX(-50%);
 }
 
+.wellcome-container {
+	background-color: aquamarine;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
 .btn-logout-container {
 	display: flex;
 	align-items: center;

@@ -16,19 +16,19 @@ export class CartFactoryDAO {
 				const fileLocation = path.resolve(__dirname, '../../DB/cartDB.json');
 				return new CartFileSystemDAO(fileLocation);
 			case PersistenceType.Mongo:
-				logger.info('Starting persistence in Mongo_Local for cart');
-				return new CartMongoDAO(PersistenceType.Mongo);
+				logger.info('Starting Mongo_Local_DB for cart');
+				return new CartMongoDAO();
 			case PersistenceType.Mongo_Atlas:
-				logger.info('Starting persistence in Mongo_Atlas for cart');
-				return new CartMongoDAO(PersistenceType.Mongo_Atlas);
+				logger.info('Starting Mongo_Atlas_DB for cart');
+				return new CartMongoDAO();
 			case PersistenceType.MySQL:
-				logger.info('Starting persistence in MySQL for cart');
+				logger.info('Starting MySQL_DB for cart');
 				return new MysqlCartDAO(PersistenceType.MySQL);
 			case PersistenceType.SQLite3:
-				logger.info('Starting persistence in SQLite3 for cart');
+				logger.info('Starting SQLite3_DB for cart');
 				return new Sqlite3CartDAO(PersistenceType.SQLite3);
 			case PersistenceType.FireBase:
-				logger.info('Starting persistence in FireBase for cart');
+				logger.info('Starting FireBase_DB for cart');
 				return new FireBaseCartDAO();
 			default:
 				PersistenceType.Memory;

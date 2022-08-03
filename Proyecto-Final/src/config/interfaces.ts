@@ -54,3 +54,17 @@ export interface IMessage {
 	avatar: string;
 	text: string;
 }
+
+export interface IMail_creator {
+	full_name: string;
+	adress: string;
+	age: number;
+	phone_number: string;
+	email: string;
+}
+
+export interface Imail_content {
+	destination: String;
+	subject: string;
+	content: string;
+}

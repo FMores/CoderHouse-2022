@@ -8,7 +8,7 @@ const router = Router();
 
 router.use('/home', home_router);
 router.use('/productos', product_router);
-router.use('/carrito', cart_router);
+router.use('/cart', cart_router);
 router.use('/auth', auth_router);
 
 export default router;

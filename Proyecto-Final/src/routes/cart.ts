@@ -23,4 +23,6 @@ router.post('/:id/product/:id_prod', validator(MySQL_post_schema), cart_controll
 // DELETE: '/:id/cart/:id_prod' - Eliminar un producto del carrito utilizando el id del usuario y el id de producto por params
 router.delete('/:id/product/:id_prod', cart_controller.delete);
 
+router.post('/checkout', cart_controller.checkout);
+
 export default router;

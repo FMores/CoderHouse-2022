@@ -1,6 +1,6 @@
 {{!-- todo esto se renderiza en main.hbs --}}
 
-<header class="container-fluid bg-dark position-sticky top-0 ">
+<header class="container-fluid bg-dark  top-0 ">
 
     <ul class="nav nav-pills mb-3 py-3 container" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -28,7 +28,7 @@
         {{> productList}}
     </div>
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-        <H1>CARRITO</H1>
+        {{> cart}}
     </div>
     <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...
     </div>

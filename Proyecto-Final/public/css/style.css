@@ -12,12 +12,24 @@ body {
 	border-radius: 4px;
 }
 
+.w3-button {
+	border-radius: 50% !important;
+	width: 50px !important;
+}
+
 .welcome-msg {
 	display: flex;
 	justify-content: center;
 	background-color: aquamarine;
 	margin-left: 50%;
 	transform: translateX(-50%);
+}
+
+.btn-addToCart {
+	font-size: 25px;
+	background-color: white;
+	width: 70px;
+	border-radius: 50%;
 }
 
 .wellcome-container {

@@ -10,6 +10,10 @@ declare global {
 			_id?: string;
 			email: string;
 			password: string;
+			full_name: string;
+			adress: string;
+			age: number;
+			phone_number: string;
 		}
 	}
 }

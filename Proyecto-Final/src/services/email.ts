@@ -4,17 +4,6 @@ import nodemailer from 'nodemailer';
 class Email {
 	private transporter: any;
 	constructor() {
-		/* ETHREAL EMAIL TRANSPORTER - OWNER DATA */
-		// 	this.transporter = nodemailer.createTransport({
-		// 		host: 'smtp.ethereal.email',
-		// 		port: 587,
-		// 		auth: {
-		// 			user: Config.ETHEREAL_EMAIL,
-		// 			pass: Config.ETHEREAL_PASSWORD,
-		// 		},
-		// 	});
-		// }
-
 		/* GMAIL TRANSPORTER - OWNER DATA */
 		this.transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',

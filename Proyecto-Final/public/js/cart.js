@@ -171,7 +171,7 @@ catalogue.addEventListener('click', (ev) => {
 // Agergar o restar cantidad del producto desde carrito
 const catalogue_cart = document.getElementById('catalogue-cart');
 
-catalogue_cart.addEventListener('click', (ev) => {
+catalogue_cart.addEventListener('click', async (ev) => {
 	ev.preventDefault();
 
 	if (ev.target.id === 'addItem') {
@@ -188,7 +188,7 @@ catalogue_cart.addEventListener('click', (ev) => {
 	}
 
 	if (ev.target.id === 'checkout') {
-		checkout(cart).then(() => console.log('salio bien'));
+		await checkout(cart);
 		return;
 	}
 });

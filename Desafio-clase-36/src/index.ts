@@ -12,7 +12,7 @@ const numCPUs = os.cpus().length;
 
 const PORT = process.env.PORT || 8080;
 
-if (cluster.isPrimary && config.SERVER_MODE === 'cluster') {
+if (cluster.isPrimary) {
 	const cpuToUse: number = 4;
 
 	logger.info(`Numero de CPUs de mi pc:${numCPUs}`);

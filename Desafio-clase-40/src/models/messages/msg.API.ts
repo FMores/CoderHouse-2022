@@ -3,6 +3,7 @@ import { CommonMethodsDAO, PersistenceType } from '../generics.interfaces';
 import { MessagesFactory } from './msg.factory';
 import { IMessage } from './msg.interfaces';
 import { MessagesRepository } from './msg.repository';
+import { MessagesDTO } from './msg_DTO';
 
 class MessagesAPI {
 	private dao: CommonMethodsDAO<IMessage>;
@@ -10,7 +11,7 @@ class MessagesAPI {
 
 	constructor() {
 		this.dao = MessagesFactory.get(PersistenceType.Mongo_Atlas);
-		this.MessagesRepository = new MessagesRepository(this.dao);
+		this.MessagesRepository = new MessagesRepository(this.dao, MessagesDTO);
 	}
 
 	public async get() {

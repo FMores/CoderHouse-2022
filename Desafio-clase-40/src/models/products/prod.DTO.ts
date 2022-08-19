@@ -8,10 +8,10 @@ export class ProductDTO {
 	private thumbnail: string;
 
 	constructor(prod: IProduct) {
-		(this.id = prod._id),
-			(this.title = prod.title),
-			(this.price = prod.price),
-			(this.thumbnail = prod.thumbnail),
-			(this.timestamp = prod.timestamp);
+		this.id = prod._id;
+		this.title = prod.title;
+		this.price = prod.price;
+		this.thumbnail = prod.thumbnail;
+		this.timestamp = prod.timestamp;
 	}
 }

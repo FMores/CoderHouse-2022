@@ -6,9 +6,9 @@ const renderMsg = (currentMsg) => {
 	let newTextArea = currentMsg
 		.map((el) => {
 			return `<div >
-            <div class="el-author">${el.author.id}</div>
+            <div class="el-author">${el.id}</div>
             <div class="el-timestamp">[${el.timestamp}]:</div>
-            <p class="el-text">${el.text} <img width="20" height="20" src=${el.author.avatar}></p>
+            <p class="el-text">${el.text} <img width="20" height="20" src=${el.avatar}></p>
             </div>`;
 		})
 		.join('');
@@ -61,7 +61,7 @@ const render_products = (current_products) => {
 			return `<tr>
         <th class='th-id' scope='row'>${el.id}</th>
         <td>${el.title}</td>
-        <td>${el.price}</td>
+        <td>$${el.price}</td>
         <td>
             <img src=${el.thumbnail} width='50' height='50' alt=${el.title} />
         </td>

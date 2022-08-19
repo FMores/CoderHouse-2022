@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const messageSchema = new Schema(
 	{
 		author: {
-			id: {
+			email: {
 				type: String,
 				required: true,
 				match: /.+\@.+\..+/,

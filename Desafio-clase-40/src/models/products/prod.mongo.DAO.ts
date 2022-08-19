@@ -3,7 +3,6 @@ import mongodbProductModel from './prod.mongo.model';
 import { date_creator } from '../../utils/date.creator';
 import { IProduct } from './prod.interfaces';
 import { CommonMethodsDAO } from '../generics.interfaces';
-import { ProductDTO } from './prod.DTO';
 
 export class ProductMongoDAO implements CommonMethodsDAO<IProduct> {
 	private prodModel: any;
@@ -20,25 +19,17 @@ export class ProductMongoDAO implements CommonMethodsDAO<IProduct> {
 	async get(id?: number) {
 		if (id) {
 			const productById = await this.prodModel(id);
-
-			const producDTO = new ProductDTO(productById);
-
-			return producDTO;
+			return productById;
 		}
 
 		const allProducts = await this.prodModel.find();
-
-		const allProductsDTO = allProducts.map((prod: IProduct) => new ProductDTO(prod));
-
-		return allProductsDTO;
+		return allProducts;
 	}
 
 	async add(prod_data: IProduct): Promise<IProduct[]> {
 		const timestamp = await date_creator();
 
-		const prodToSave_DTO = new ProductDTO({ ...prod_data, timestamp });
-
-		const newProduct = new this.prodModel(prodToSave_DTO);
+		const newProduct = new this.prodModel({ ...prod_data, timestamp });
 
 		await newProduct.save();
 

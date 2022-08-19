@@ -1,47 +1,61 @@
 import { MongoDBSingleton } from '../../services/Mongo.Service';
 import mongodbMessageModel from '../../models/messages/mongo.msg.model';
 import { date_creator } from '../../utils/date.creator';
-import { IMessage } from './msg.interfaces';
+import { IMessage, IMessageDB } from './msg.interfaces';
 import { CommonMethodsDAO } from '../generics.interfaces';
+import { MessagesDTO } from './msg_DTO';
+import { database } from 'firebase-admin';
 
 export class MsgMongoDAO implements CommonMethodsDAO<IMessage> {
-	private msg: any;
+	private msg: typeof mongodbMessageModel;
 
 	constructor() {
 		this.msg = mongodbMessageModel;
 		this.initMongo();
 	}
 
-	private async initMongo(id?: number) {
+	private async initMongo() {
 		MongoDBSingleton.getInstance();
 	}
 
-	async get() {
-		return await this.msg.find();
+	async get(id?: number): Promise<IMessage[]> {
+		const messagesFromDB = await this.msg.find();
+
+		const messages: IMessage[] = [];
+
+		messagesFromDB.forEach((aMessage: IMessageDB) => {
+			const {
+				text,
+				timestamp,
+				author: { ...author },
+			} = aMessage;
+			messages.push({ ...author, text, timestamp });
+		});
+
+		return messages;
 	}
 
-	// public async add(msg_data: IMessage) {
-	// 	const date = await date_creator();
-
-	// 	const msgToSave = {
-	// 		author: {
-	// 			id: msg_data.email,
-	// 			name: msg_data.name,
-	// 			surname: msg_data.surname,
-	// 			age: msg_data.age,
-	// 			alias: msg_data.alias,
-	// 			avatar: msg_data.avatar,
-	// 		},
-	// 		text: msg_data.text,
-	// 		timestamp: date,
-	// 	};
-
-	// 	const newMsg = new this.msg(msgToSave);
-
-	// 	await newMsg.save();
-	// }
 	async add(data: IMessage): Promise<IMessage[]> {
 		const timestamp = await date_creator();
+
+		const newMessage = {
+			author: {
+				email: data.id,
+				name: data.name,
+				surname: data.surname,
+				age: data.age,
+				alias: data.alias,
+				avatar: data.avatar,
+			},
+			text: data.text,
+			timestamp,
+		};
+
+		const msgToSave = new this.msg(newMessage);
+
+		await msgToSave.save();
+
+		return [];
 	}
 
 	async update(id: number, newProductData: IMessage): Promise<IMessage[]> {

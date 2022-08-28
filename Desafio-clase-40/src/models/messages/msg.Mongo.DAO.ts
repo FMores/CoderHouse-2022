@@ -55,7 +55,7 @@ export class MsgMongoDAO implements CommonMethodsDAO<IMessage> {
 
 		await msgToSave.save();
 
-		return [];
+		return msgToSave;
 	}
 
 	async update(id: number, newProductData: IMessage): Promise<IMessage[]> {

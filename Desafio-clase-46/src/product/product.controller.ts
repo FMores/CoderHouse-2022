@@ -9,10 +9,16 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ProductDTO } from './DTOs/product.dto';
+
+import {
+  CreateProductDTO,
+  ProductDTO,
+  UpdateProductDTO,
+} from './DTOs/product.dto';
 import { ProductService } from './product.service';
 
-@Controller('product')
+// Dentro de @Controller se define la ruta para comunicarnos con el controller desde POSTMAN o CLIENT
+@Controller('api/product')
 export class ProductController {
   /**
    * Para poder utilizar el service de books, debemos inicializar el servicio dentro del constructor
@@ -21,7 +27,12 @@ export class ProductController {
 
   @Get()
   getAllProducts(): Promise<ProductDTO[]> {
-    return this.productService.getProduct();
+    return this.productService.getAllProducts();
+  }
+
+  @Get(':id')
+  getProductById(@Param('id') idProduct: string): Promise<ProductDTO> {
+    return this.productService.getProductById(idProduct);
   }
 
   /*
@@ -30,22 +41,22 @@ export class ProductController {
    */
   @Post()
   @UsePipes(ValidationPipe)
-  createBook(@Body() product: ProductDTO): Promise<ProductDTO> {
+  createProduct(@Body() product: CreateProductDTO): Promise<ProductDTO> {
     return this.productService.addProduct(product);
   }
 
   @Put(':id')
   @UsePipes(ValidationPipe)
-  updateBook(
-    @Param('id') idBook: string,
-    @Body() book: ProductDTO,
+  updateProduct(
+    @Param('id') idProduct: string,
+    @Body() product: UpdateProductDTO,
   ): Promise<ProductDTO> {
-    return this.productService.updateProduct(idBook, book);
+    return this.productService.updateProduct(idProduct, product);
   }
 
   @Delete(':id')
   @UsePipes(ValidationPipe)
-  deleteBook(@Param('id') idProduct: string): Promise<ProductDTO> {
+  deleteProduct(@Param('id') idProduct: string): Promise<ProductDTO> {
     return this.productService.deleteProduct(idProduct);
   }
 }

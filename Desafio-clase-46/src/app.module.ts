@@ -1,7 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProductController } from './product/product.controller';
 import { ProductService } from './product/product.service';
 import { ProductSchema } from './product/DTOs/product.schema';
@@ -14,11 +12,11 @@ dotenv.config();
     // Crea la conexion a mongoDB
     MongooseModule.forRoot(process.env.MONGO_ATLAS_SRV),
     // Hacemos disponibles cada esquema que sea creado (products, cart, messajes, etc.)
-    // Ej.: Voy a crear una entidad "book" basada en el esquema "BookSchema"
+    // Ej.: Voy a crear una entidad "Product" basada en el esquema "ProductSchema"
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
   ],
-  controllers: [AppController, ProductController],
-  providers: [AppService, ProductService],
+  controllers: [ProductController],
+  providers: [ProductService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

@@ -13,6 +13,12 @@ export class ProductService {
 
   // @ApiOperation y @ApiResponse tienen la funcion de describir la operecion para que swagger
   // puega generar la documentacion en base a esos datos.
+
+  /**
+   * -----------------------------------------------
+   * ------------------- GET ALL -------------------
+   * -----------------------------------------------
+   */
   @ApiOperation({
     description: 'Retorna un array de productos',
   })
@@ -21,10 +27,32 @@ export class ProductService {
     description: 'Retorna un array de productos correctamente',
     type: ProductDTO,
   })
-  async getProduct(): Promise<ProductDTO[]> {
+  async getAllProducts(): Promise<ProductDTO[]> {
     return await this.productModel.find();
   }
 
+  /**
+   * -----------------------------------------------
+   * ------------------- GET BY ID -----------------
+   * -----------------------------------------------
+   */
+  @ApiOperation({
+    description: 'Retorna un producto buscando por id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Retorna el producto buscado correctamente',
+    type: ProductDTO,
+  })
+  async getProductById(idProduct: string): Promise<ProductDTO> {
+    return await this.productModel.findById(idProduct);
+  }
+
+  /**
+   * -----------------------------------------------
+   * -------------------- POST ---------------------
+   * -----------------------------------------------
+   */
   @ApiOperation({
     description: 'Agrega un producto a la DB',
   })
@@ -39,6 +67,11 @@ export class ProductService {
     return newProduct;
   }
 
+  /**
+   * -----------------------------------------------
+   * -------------------- PUT ----------------------
+   * -----------------------------------------------
+   */
   @ApiOperation({
     description: 'Actualiza un producto por su ID.',
   })
@@ -56,6 +89,11 @@ export class ProductService {
     });
   }
 
+  /**
+   * -----------------------------------------------
+   * ------------------- DELETE --------------------
+   * -----------------------------------------------
+   */
   @ApiOperation({
     description: 'Elimina un producto por ID.',
   })

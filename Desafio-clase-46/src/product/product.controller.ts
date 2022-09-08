@@ -8,7 +8,10 @@ import {
   Param,
   UsePipes,
   ValidationPipe,
+  Render,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthenticatedGuard } from '../auth/authenticated.guard';
 
 import {
   CreateProductDTO,
@@ -17,12 +20,8 @@ import {
 } from './DTOs/product.dto';
 import { ProductService } from './product.service';
 
-// Dentro de @Controller se define la ruta para comunicarnos con el controller desde POSTMAN o CLIENT
-@Controller('api/product')
+@Controller('api/products')
 export class ProductController {
-  /**
-   * Para poder utilizar el service de books, debemos inicializar el servicio dentro del constructor
-   */
   constructor(private readonly productService: ProductService) {}
 
   @Get()
@@ -35,16 +34,14 @@ export class ProductController {
     return this.productService.getProductById(idProduct);
   }
 
-  /*
-   * Para que class-validator, utilizado en book.controller, se debe agregar @UsePipes(ValidationPipe)
-   * De lo contrario la validacion no se realiza y los datos del body no son verificados.
-   */
+  @UseGuards(AuthenticatedGuard)
   @Post()
   @UsePipes(ValidationPipe)
   createProduct(@Body() product: CreateProductDTO): Promise<ProductDTO> {
     return this.productService.addProduct(product);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Put(':id')
   @UsePipes(ValidationPipe)
   updateProduct(
@@ -54,6 +51,7 @@ export class ProductController {
     return this.productService.updateProduct(idProduct, product);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Delete(':id')
   @UsePipes(ValidationPipe)
   deleteProduct(@Param('id') idProduct: string): Promise<ProductDTO> {

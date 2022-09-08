@@ -8,7 +8,6 @@ import {
   IS_URL,
   Length,
 } from 'class-validator';
-import { link } from 'fs';
 
 /**
  * class-validator es similar a joi para validad los datos que ingresan por el body.

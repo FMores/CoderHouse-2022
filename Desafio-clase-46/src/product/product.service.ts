@@ -6,7 +6,7 @@ import { ProductDTO } from './DTOs/product.dto';
 
 @Injectable()
 export class ProductService {
-  // Inyectamos la entidad/modelo "Book" creado en app.module.ts
+  // Inyectamos la entidad/modelo "product" creado en app.module.ts
   constructor(
     @InjectModel('Product') private readonly productModel: Model<ProductDTO>,
   ) {}

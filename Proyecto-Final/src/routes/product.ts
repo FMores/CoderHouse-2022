@@ -11,12 +11,14 @@ const router = Router();
 router.get('/:id?', expressAsyncHandler(product_controller.get));
 
 // POST: '/' - Para incorporar productos al listado (disponible para administradores)
-router.post('/', isLoggedIn, validator(new_product), expressAsyncHandler(product_controller.add));
+//router.post('/', isLoggedIn, validator(new_product), expressAsyncHandler(product_controller.add));
+router.post('/', validator(new_product), expressAsyncHandler(product_controller.add));
 
 // PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-router.put('/:id', isLoggedIn, validator(update_product)), expressAsyncHandler(product_controller.update);
+//router.put('/:id', isLoggedIn, validator(update_product)), expressAsyncHandler(product_controller.update);
+router.put('/:id', validator(update_product)), expressAsyncHandler(product_controller.update);
 
 // DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-router.delete('/:id', isLoggedIn, expressAsyncHandler(product_controller.delete));
-
+//router.delete('/:id', isLoggedIn, expressAsyncHandler(product_controller.delete));
+router.delete('/:id', expressAsyncHandler(product_controller.delete));
 export default router;

@@ -101,21 +101,12 @@ export class MongoDBCartsDAO {
 			throw { status: 404, message: 'Product Not Found!' };
 		}
 
-		// Si el producto existe, modifico la cantidad y guardo.
-		if (producInCart[0].qty > 1) {
-			const updatedProductInCart = await this.cartsCollection.findOneAndUpdate(
-				{ user: user_id, 'items.product': prod_id },
-				{ $set: { 'items.$.qty': producInCart[0].qty - 1 } },
-				{ new: true },
-			);
-			return prod_id;
-		}
-
 		//Esta linea sirve para eliminar el producto del array cuando detecta que ya se elimino el ultimo.
 		await this.cartsCollection.updateOne(
 			{ user: user_id },
 			{ $pull: { items: { product: prod_id } } },
 		);
+
 		return prod_id;
 	}
 

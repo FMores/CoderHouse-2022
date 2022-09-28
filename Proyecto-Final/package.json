@@ -6,10 +6,7 @@
 	"scripts": {
 		"start": "npm run build && node ./dist",
 		"build": "tsc -p .",
-		"dev": "nodemon",
-		"migrateDb": "npx knex migrate:latest --knexfile src/config/knexfile.ts",
-		"rollbackDb": "npx knex migrate:rollback  --knexfile src/config/knexfile.ts",
-		"seedDb": "npx knex seed:run --knexfile src/config/knexfile.ts"
+		"dev": "nodemon"
 	},
 	"keywords": [],
 	"author": "Fabricio R. Mores",

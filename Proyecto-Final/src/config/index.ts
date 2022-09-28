@@ -6,7 +6,6 @@ dotenv.config();
 
 export default {
 	/* SERVER AND DATABASE */
-	SERVER_MODE: yargs.SERVER_MODE || process.env.SERVER_MODE,
 	SERVER_PORT: yargs.SERVER_PORT || process.env.SERVER_PORT,
 	MONGODB_MODE: yargs.MONGODB_MODE || process.env.MONGODB_MODE,
 	MONGODB_LOCAL_URL: yargs.MONGODB_LOCAL_URL || process.env.MONGODB_LOCAL_URL,

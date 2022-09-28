@@ -1,6 +1,6 @@
 import { multer_check_img, upload_single_img } from '../middleware/multer';
 import { Router, Request, Response, NextFunction } from 'express';
-import { isLoggedIn } from '../middleware/isLoggedIn';
+import { isLoggedIn } from '../models/auth/passport.auth';
 import { validator } from '../middleware/joi.validator';
 import { login } from '../models/auth/joi.auth.schema';
 import { logger } from '../utils/winston.logger';

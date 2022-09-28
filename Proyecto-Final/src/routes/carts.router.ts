@@ -1,7 +1,7 @@
 import { cartController } from '../controllers/carts.controllers';
 import { Router } from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import { isLoggedIn } from '../middleware/isLoggedIn';
+import { isLoggedIn } from '../models/auth/passport.auth';
 
 const cartRouter = Router();
 

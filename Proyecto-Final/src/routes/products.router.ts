@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import { newProduct, updateProduct } from '../models/products/joi.products.model';
 import { productController } from '../controllers/products.controllers';
 import { validator } from '../middleware/joi.validator';
-import { isLoggedIn } from '../middleware/isLoggedIn';
+import { isLoggedIn } from '../models/auth/passport.auth';
 
 const router = Router();
 

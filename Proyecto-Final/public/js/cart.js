@@ -1,21 +1,45 @@
+//-------------------------------------------------//
 //*------ PARA MANEJO DE LISTA DE PRODUCTOS ------*//
+//-------------------------------------------------//
+
+// Obtengo lista de productos y lo renderizo
+const getProductsFromDb = async () => {
+	await fetch('http://localhost:8080/api/products')
+		.then((response) => response.json())
+		.then((prod_list) => render_products(prod_list));
+};
+
+const postProductToDb = async (new_product) => {
+	await fetch('http://localhost:8080/api/products', {
+		method: 'post',
+		body: JSON.stringify(new_product),
+		headers: { 'Content-Type': 'application/json' },
+	});
+};
+
+window.addEventListener('load', (event) => {
+	getProductsFromDb();
+});
 
 const render_products = (current_products) => {
-	const new_product = current_products
+	const new_product = current_products.products
 		.map((el) => {
 			return `<tr>
-        <td>${el.name}</td>
-        <td>$${el.price}</td>
-        <td>
-            <img src=${el.thumbnail} width='50' height='50' alt=${el.name} />
-        </td>
+	    <td>${el.name}</td>
+		<td>${el.description}</td>
+	    <td>$${el.price}</td>
+	    <td>
+	        <img src=${el.photo} width='50' height='50' alt=${el.name} />
+	    </td>
+		<td>${el.category}</td>
+		<td>${el.qty}</td>
 		<td>
-			<button id="addItem" 
-            class="btn-addToCart" 
-            id-product=${el._id}
-            type="button"></i>&#128722;</button>
+			<button id="addItem"
+	        class="btn-addToCart"
+	        id-product=${el.id}
+	        type="button"></i>&#128722;</button>
 		</td>
-    </tr>`;
+	</tr>`;
 		})
 		.join('');
 
@@ -25,60 +49,82 @@ const render_products = (current_products) => {
 	return;
 };
 
-const send_new_product = () => {
+const send_new_product = async () => {
+	//Obtengo los valores de cada campo para crear un nuevo producto.
 	const name = document.getElementById('name').value;
-
 	const price = Number(document.getElementById('price').value);
+	const description = document.getElementById('description').value;
+	const qty = Number(document.getElementById('qty').value);
+	const photo = document.getElementById('image').value;
+	const category = document.getElementById('category').value;
 
-	const thumbnail = document.getElementById('thumbnail').value;
+	const new_product_data = { name, description, price, photo, category, qty };
 
-	const new_product = { name, price, thumbnail };
+	await postProductToDb(new_product_data);
 
-	socket.emit('new_product', new_product);
+	await getProductsFromDb();
 };
 
+//-------------------------------------*//
 //*------ PARA MANEJO DE CARRITO ------*//
+//-------------------------------------*//
 
-let cart = [];
+// Obtengo los datos del carrito.
+const getFromCart = async () => {
+	await fetch('http://localhost:8080/api/cart')
+		.then((response) => response.json())
+		.then((result) => render_cart(result.cart[0].items));
+	return;
+};
 
-let db_products = null;
+const postToCart = async (prod_id) => {
+	await fetch('http://localhost:8080/api/cart', {
+		method: 'POST',
+		body: JSON.stringify({ prod_id }),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+	return;
+};
 
-window.addEventListener('load', (event) => {
-	if (!localStorage.getItem('cart')) {
-		localStorage.setItem('cart', '[]');
-	}
+const deleteProdFromCart = async (prod_id) => {
+	await fetch(`http://localhost:8080/api/cart/${prod_id}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+	return;
+};
 
-	cart = JSON.parse(localStorage.getItem('cart'));
-	render_cart();
+window.addEventListener('load', async (event) => {
+	await getFromCart();
+	return;
 });
 
-socket.on('product-list', (currentProducts) => {
-	if (currentProducts) {
-		render_products(currentProducts);
-		db_products = currentProducts;
-	}
-});
-
-const render_cart = () => {
+// Renderizo los productos que hay en el carrito.
+const render_cart = (cart) => {
 	const cart_items = cart
 		.map((el) => {
 			return `
         <tr>
             <td>
-                <img src=${el.thumbnail} width='50' height='50' alt=${el.name} />
+                <img src=${el.product.photo} width='50' height='50' alt=${el.product.name} />
             </td>
-            <td>${el.name}</td>
-            <td>$${el.price}</td>
+            <td>${el.product.name}</td>
+			<td>${el.product.description}</td>
+            <td>$${el.product.price}</td>
             <td>${el.qty}</td>
-            <td>$${el.qty * el.price}</td>
+            <td>$${el.qty * el.product.price}</td>
 		    <td>
 			    <button id="addItem" 
                 class="w3-button w3-xlarge w3-teal" 
-                id-product=${el._id}
+                id-product=${el.product._id}
                 type="button">+</button>
                 <button id="deleteItem" 
                 class="w3-button w3-xlarge w3-red w3-card-4" 
-                id-product=${el._id}
+                id-product=${el.product._id}
                 type="button">-</button>
 		    </td>
         </tr>`;
@@ -91,75 +137,35 @@ const render_cart = () => {
 	return;
 };
 
-const addItemToCart = (item_id) => {
-	let searched_product = null;
-
-	// Si existe prod. en  la lista, guando los datos.
-	for (i of db_products) {
-		if (i._id === item_id) {
-			searched_product = i;
-		}
-	}
-
-	// Si no existe, termino la funcion.
-	if (!searched_product) {
-		return;
-	}
-
-	// Si el prod. ya existe en cart, aumento la cantidad en 1.
-	for (i of cart) {
-		if (i._id === item_id) {
-			i.qty++;
-			render_cart();
-			localStorage.setItem('cart', JSON.stringify(cart));
-			return;
-		}
-	}
-
-	// Si el prod. no existe en cart, agrego la propiedad qty en 1.
-	searched_product.qty = 1;
-	// Guardo el objeto en cart.
-	cart.push(searched_product);
-	// Guardo los cambios en localStorage
-	localStorage.setItem('cart', JSON.stringify(cart));
-	render_cart();
-};
-
-const deleteItemFromCart = (item_id) => {
-	const prod_index = cart.findIndex((el) => el._id === item_id);
-
-	if (cart[prod_index].qty === 1) {
-		cart.splice(prod_index, 1);
-		render_cart();
-		localStorage.setItem('cart', JSON.stringify(cart));
-		return;
-	}
-
-	cart[prod_index].qty--;
-	render_cart();
-	localStorage.setItem('cart', JSON.stringify(cart));
+const addItemToCart = async (item_id) => {
+	await postToCart(item_id);
+	await getFromCart();
 	return;
 };
 
-const checkout = async (cart_data) => {
+const deleteItemFromCart = async (item_id) => {
+	await deleteProdFromCart(item_id);
+	await getFromCart();
+	return;
+};
+
+// Confirmo compra y limpia el carrito
+const checkout = async () => {
 	await fetch('http://localhost:8080/api/cart/checkout', {
 		method: 'POST',
-		body: JSON.stringify({ cart: cart_data }),
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	});
-
-	localStorage.setItem('cart', '[]');
-	cart = [];
-	render_cart();
+	await getFromCart();
 	return;
 };
 
-// Agrego un listener a todos los botones del fom product list.
+// Agrego un listener a todos los botones del form product list.
 const catalogue = document.getElementById('catalogue');
 
-catalogue.addEventListener('click', (ev) => {
+// Agrego un producto al carrito pasando el id.
+catalogue.addEventListener('click', async (ev) => {
 	ev.preventDefault();
 
 	if (ev.target.id === 'addItem') {
@@ -176,19 +182,22 @@ catalogue_cart.addEventListener('click', async (ev) => {
 
 	if (ev.target.id === 'addItem') {
 		const prod_id = ev.target.attributes['id-product'].value;
-		addItemToCart(prod_id);
+		await addItemToCart(prod_id);
+		await getFromCart();
 		render_cart();
 		return;
 	}
 
 	if (ev.target.id === 'deleteItem') {
 		const prod_id = ev.target.attributes['id-product'].value;
-		deleteItemFromCart(prod_id);
+		await deleteItemFromCart(prod_id);
+		await getFromCart();
+		render_cart();
 		return;
 	}
 
 	if (ev.target.id === 'checkout') {
-		await checkout(cart);
+		await checkout();
 		return;
 	}
 });

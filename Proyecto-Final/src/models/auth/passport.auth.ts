@@ -5,7 +5,7 @@ import mongoCartsModel from '../carts/mongo.carts.model';
 import mongoUserModel from '../users/mongo.user.model';
 import { INewCart } from '../carts/carts.interfaces';
 import { EmailService } from '../../services/email';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import passport from 'passport';
 
 declare global {
@@ -108,3 +108,8 @@ passport.deserializeUser((userId, done) => {
 		done(err, user);
 	});
 });
+
+export const isLoggedIn = (req: Request, res: Response, done: any) => {
+	if (!req.user) return res.redirect('/api/auth/login');
+	done();
+};

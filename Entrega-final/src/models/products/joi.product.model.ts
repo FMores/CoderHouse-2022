@@ -1,5 +1,4 @@
-import { number, object, ObjectSchema, string, types } from 'joi';
-import { isValidObjectId } from 'mongoose';
+import { number, object, ObjectSchema, string } from 'joi';
 
 export const newProduct: ObjectSchema = object()
     .keys({

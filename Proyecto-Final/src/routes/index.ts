@@ -1,14 +1,18 @@
-import { Router } from 'express';
-import product_router from './product';
-import cart_router from '../routes/cart';
-import auth_router from './auth';
-import home_router from './home';
+import { isLoggedIn } from '../middleware/isLoggedIn';
+import { Router, Request, Response } from 'express';
+import productRouter from './products.router';
+import cartRouter from '../routes/carts.router';
+import authRouter from './auth.router';
 
 const router = Router();
 
-router.use('/home', home_router);
-router.use('/productos', product_router);
-router.use('/cart', cart_router);
-router.use('/auth', auth_router);
+router.get('/', isLoggedIn, (req: Request, res: Response) => {
+	const uEmail = req.user!.email;
+	res.render('index', { uEmail });
+});
+
+router.use('/products', productRouter);
+router.use('/cart', cartRouter);
+router.use('/auth', authRouter);
 
 export default router;

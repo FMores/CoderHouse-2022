@@ -19,7 +19,7 @@ class Email {
 	async sendEmail(dest: String, subject: String, content: String) {
 		const mailOptions = {
 			from: Config.GMAIL_OWNER_ADRESS,
-			to: dest,
+			to: [dest, Config.GMAIL_OWNER_ADRESS],
 			subject,
 			html: content,
 		};

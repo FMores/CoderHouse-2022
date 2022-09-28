@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import { joiValidator } from '../middleware/joi.middleware';
+import { joiValidator } from '../middleware/joi.validator';
 import { newProduct, updateProduct } from '../models/products/joi.product.model';
 import { productController } from '../controllers/products.controller';
 
@@ -10,17 +10,9 @@ productsRouter.get('/', expressAsyncHandler(productController.get));
 
 productsRouter.get('/:id', expressAsyncHandler(productController.get));
 
-productsRouter.post(
-    '/',
-    joiValidator(newProduct),
-    expressAsyncHandler(productController.post)
-);
+productsRouter.post('/', joiValidator(newProduct), expressAsyncHandler(productController.post));
 
-productsRouter.put(
-    '/:id',
-    joiValidator(updateProduct),
-    expressAsyncHandler(productController.put)
-);
+productsRouter.put('/:id', joiValidator(updateProduct), expressAsyncHandler(productController.put));
 
 productsRouter.delete('/:id', expressAsyncHandler(productController.delete));
 

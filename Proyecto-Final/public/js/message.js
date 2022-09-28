@@ -15,7 +15,8 @@ const renderMsg = (currentMsg) => {
 
 	if (document.getElementById('textarea')) {
 		document.getElementById('textarea').innerHTML = newTextArea;
-		document.getElementById('textarea').scrollTop = document.getElementById('textarea').scrollHeight;
+		document.getElementById('textarea').scrollTop =
+			document.getElementById('textarea').scrollHeight;
 	}
 	return;
 };
@@ -51,3 +52,15 @@ socket.on('mensajes', (currentMsg) => {
 		renderMsg(currentMsg);
 	}
 });
+
+//*------ PARA EL MANEJO DE LOGIN ------*//
+
+const logout_function = () => {
+	window.location.href = '/api/auth/logout';
+};
+
+const error_timer = () => {
+	setTimeout(() => {
+		window.location.href = '/api/auth/login';
+	}, 3000);
+};

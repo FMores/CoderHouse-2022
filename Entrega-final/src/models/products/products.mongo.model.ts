@@ -1,7 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 import { IProduct } from './product.interfaces';
 
-export const productSchema: Schema = new Schema(
+export const productSchema: Schema = new Schema<IProduct>(
     {
         name: { type: String, required: true, max: 100 },
         description: { type: String, required: true, max: 250 },

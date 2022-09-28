@@ -11,7 +11,7 @@ const numCPUs = os.cpus().length;
 if (cluster.isPrimary && config.SERVER_MODE === 'CLUSTER') {
 	logger.info(`Server in cluster mode => PID Master:${process.pid}`);
 
-	for (let cpu = numCPUs / 2; cpu < numCPUs; cpu++) {
+	for (let cpu = numCPUs; cpu < numCPUs; cpu++) {
 		cluster.fork();
 	}
 
